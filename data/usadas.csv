@@ -1,0 +1,31 @@
+idpregunta,category,value,question,choice_a,choice_b,choice_c,choice_d,answer,image
+19,Arte,100,¿Quién pintó la Mona Lisa?,Miguel Ángel,Leonardo da Vinci,Rafael,Botticelli,1,
+20,Arte,200,¿A qué corriente pertenece Pablo Picasso?,Surrealismo,Impresionismo,Cubismo,Realismo,2,
+21,Arte,300,¿En qué museo se encuentra “La noche estrellada” de Van Gogh?,Louvre,Museo del Prado,Museo de Arte Moderno de Nueva York,National Gallery,2,
+22,Arte,400,¿Qué escultor creó “El David”?,Donatello,Bernini,Miguel Ángel,Cellini,2,
+7,Ciencia,100,¿Cuál es el planeta más cercano al Sol?,Venus,Mercurio,Marte,Júpiter,1,
+8,Ciencia,200,¿Qué gas es esencial para la respiración humana?,Nitrógeno,Oxígeno,Dióxido de carbono,Helio,1,
+9,Ciencia,300,¿Cuál es la fórmula química del agua?,H₂O,CO₂,O₂,CH₄,0,
+10,Ciencia,400,¿Qué científico propuso la teoría de la relatividad?,Isaac Newton,Albert Einstein,Galileo Galilei,Nikola Tesla,1,
+25,Deportes,100,¿Cuántos jugadores tiene un equipo de fútbol en el campo?,9,10,11,12,2,
+26,Deportes,200,¿En qué deporte se usa una raqueta y una pelota amarilla?,Pádel,Tenis,Bádminton,Squash,1,
+27,Deportes,300,¿En qué año se celebraron los primeros Juegos Olímpicos modernos?,1896,1900,1912,1920,0,
+28,Deportes,400,¿Qué país ha ganado más Copas del Mundo de fútbol?,Alemania,Italia,Brasil,Argentina,2,
+13,Geografía,100,¿Cuál es el río más largo del mundo?,Amazonas,Nilo,Yangtsé,Misisipi,0,
+14,Geografía,200,¿Qué país tiene la mayor población del mundo?,India,China,Estados Unidos,Indonesia,1,
+15,Geografía,300,¿Cuál es la capital de Australia?,Sídney,Melbourne,Canberra,Perth,2,
+16,Geografía,400,¿En qué continente se encuentra el desierto del Sahara?,Asia,África,América,Oceanía,1,
+1,Historia,100,¿En qué año comenzó la Primera Guerra Mundial?,1912,1914,1916,1918,1,1.jpg
+2,Historia,200,¿Quién fue el primer emperador del Imperio Romano?,Julio César,Nerón,Augusto,Trajano,2,2.jpg
+3,Historia,300,¿Qué civilización construyó Machu Picchu?,Aztecas,Mayas,Incas,Olmecas,2,3.jpg
+4,Historia,400,¿En qué año cayó el Muro de Berlín?,1985,1987,1989,1991,2,4.jpg
+31,Literatura,100,¿Quién escribió “Don Quijote de la Mancha”?,Lope de Vega,Miguel de Cervantes,Calderón de la Barca,Garcilaso de la Vega,1,
+32,Literatura,200,¿Qué autor escribió “Cien años de soledad”?,Mario Vargas Llosa,Gabriel García Márquez,Julio Cortázar,Pablo Neruda,1,
+33,Literatura,300,¿En qué país nació William Shakespeare?,Francia,Escocia,Inglaterra,Irlanda,2,
+34,Literatura,400,¿Qué libro comienza con la frase “En un lugar de la Mancha…”?,El Lazarillo de Tormes,La Celestina,Don Quijote de la Mancha,Crónica de una muerte anunciada,2,
+23,Arte,500,¿Qué artista es conocido por sus relojes derretidos?,Dalí,Miró,Picasso,Monet,0,
+11,Ciencia,500,¿Qué partícula subatómica tiene carga negativa?,Protón,Neutrón,Electrón,Quark,2,
+29,Deportes,500,¿Quién es conocido como “El hombre más rápido del mundo”?,Carl Lewis,Usain Bolt,Jesse Owens,Tyson Gay,1,
+17,Geografía,500,¿Qué montaña es la más alta del mundo?,K2,Kilimanjaro,Aconcagua,Everest,3,
+5,Historia,500,¿Qué tratado puso fin a la Primera Guerra Mundial?,Tratado de París,Tratado de Versalles,Tratado de Roma,Tratado de Ginebra,1,5.jpg
+35,Literatura,500,¿Qué poeta escribió “Veinte poemas de amor y una canción desesperada”?,Octavio Paz,Rubén Darío,Pablo Neruda,Federico García Lorca,2,

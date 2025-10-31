@@ -1,0 +1,15 @@
+__pycache__
+```
+
+O si está en una ruta específica:
+```
+ruta/a/la/carpeta/
+```
+
+Algunos ejemplos comunes:
+```
+node_modules/
+dist/
+build/
+.vscode/
+*.log

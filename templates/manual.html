@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📖 Manual de Usuario - dy ESG</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/manual.css') }}">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📖</text></svg>">
+</head>
+<body>
+    <div class="manual-container">
+        <!-- Header -->
+        <header class="manual-header">
+            <div class="header-content">
+                <h1>📖 Manual de Usuario</h1>
+                <p class="subtitle">Painani del Conocmiento - Escuela Superior de Guerra</p>
+                <a href="/" class="btn-back">← Volver al Juego</a>
+            </div>
+        </header>
+
+        <!-- Navegación -->
+        <nav class="manual-nav">
+            <a href="#inicio" class="nav-item active">🏠 Inicio</a>
+            <a href="#requisitos" class="nav-item">✅ Requisitos</a>
+            <a href="#instalacion" class="nav-item">⚙️ Instalación</a>
+            <a href="#crear-preguntas" class="nav-item">📝 Crear Preguntas</a>
+            <a href="#imagenes" class="nav-item">🖼️ Imágenes</a>
+            <a href="#mosaico" class="nav-item">🧩 Mosaico</a>
+            <a href="#jugar" class="nav-item">🎮 Cómo Jugar</a>
+        </nav>
+
+        <!-- Contenido -->
+        <main class="manual-content">
+            <!-- Sección: Inicio -->
+            <section id="inicio" class="manual-section">
+                <h2>🏠 Bienvenido</h2>
+                <div class="card">
+                    <p class="intro">
+                        ¡Bienvenido al sistema de Painani del Conocimiento de la Escuela Superior de Guerra! 
+                        Este manual te guiará paso a paso para configurar y jugar.
+                    </p>
+                    <div class="features-grid">
+                        <div class="feature">
+                            <div class="feature-icon">👥</div>
+                            <h3>Hasta 10 equipos</h3>
+                            <p>Configura entre 2 y 10 equipos al instante</p>
+                        </div>
+                        <div class="feature">
+                            <div class="feature-icon">📱</div>
+                            <h3>Multi-dispositivo</h3>
+                            <p>Juega desde PC, tablet o móvil</p>
+                        </div>
+                        <div class="feature">
+                            <div class="feature-icon">🖼️</div>
+                            <h3>Con Imágenes</h3>
+                            <p>Soporte completo para preguntas visuales</p>
+                        </div>
+                        <div class="feature">
+                            <div class="feature-icon">🧩</div>
+                            <h3>Mosaico</h3>
+                            <p>Revela una imagen al completar el juego</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sección: Requisitos -->
+            <section id="requisitos" class="manual-section">
+                <h2>✅ Requisitos del Sistema</h2>
+                <div class="card">
+                    <h3>Software Necesario:</h3>
+                    <ul class="checklist">
+                        <li>✓ Python 3.8 o superior</li>
+                        <li>✓ Navegador web moderno (Chrome, Firefox, Edge)</li>
+                        <li>✓ Conexión de red local (para multijugador)</li>
+                    </ul>
+
+                    <h3 style="margin-top: 30px;">Hardware Mínimo:</h3>
+                    <ul class="checklist">
+                        <li>✓ Procesador: Dual-core 2GHz</li>
+                        <li>✓ RAM: 2GB</li>
+                        <li>✓ Espacio: 100MB libres</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Sección: Instalación -->
+            <section id="instalacion" class="manual-section">
+                <h2>⚙️ Instalación</h2>
+                
+                <div class="card step-card">
+                    <div class="step-number">1</div>
+                    <h3>Descargar el Proyecto</h3>
+                    <p>Descarga o clona el proyecto en tu computadora.</p>
+                    <div class="code-block">
+                        <code>git clone [URL del proyecto]</code>
+                    </div>
+                </div>
+
+                <div class="card step-card">
+                    <div class="step-number">2</div>
+                    <h3>Instalar Dependencias</h3>
+                    <p>Abre una terminal en la carpeta del proyecto y ejecuta:</p>
+                    <div class="code-block">
+                        <code>pip install -r requirements.txt</code>
+                    </div>
+                </div>
+
+                <div class="card step-card">
+                    <div class="step-number">3</div>
+                    <h3>Iniciar el Servidor</h3>
+                    <p>Ejecuta el siguiente comando:</p>
+                    <div class="code-block">
+                        <code>python app.py</code>
+                    </div>
+                </div>
+
+                <div class="card step-card">
+                    <div class="step-number">4</div>
+                    <h3>Abrir en el Navegador</h3>
+                    <p>Visita en tu navegador:</p>
+                    <div class="code-block">
+                        <code>http://localhost:5000</code>
+                    </div>
+                </div>
+
+                <div class="alert alert-info">
+                    <strong>💡 Consejo:</strong> Para jugar en red local, otros dispositivos deben usar 
+                    <code>http://[IP-del-servidor]:5000</code>
+                </div>
+            </section>
+
+            <!-- Sección: Crear Preguntas -->
+            <section id="crear-preguntas" class="manual-section">
+                <h2>📝 Crear Banco de Preguntas</h2>
+                
+                <div class="card">
+                    <h3>Formato CSV (Recomendado)</h3>
+                    <p>Crea un archivo Excel o CSV con las siguientes columnas:</p>
+                    
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Columna</th>
+                                    <th>Descripción</th>
+                                    <th>Ejemplo</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>idpregunta</code></td>
+                                    <td>Número único</td>
+                                    <td>1, 2, 3...</td>
+                                </tr>
+                                <tr>
+                                    <td><code>category</code></td>
+                                    <td>Categoría</td>
+                                    <td>Historia, Ciencia</td>
+                                </tr>
+                                <tr>
+                                    <td><code>value</code></td>
+                                    <td>Puntos</td>
+                                    <td>100, 200, 300, 400, 500</td>
+                                </tr>
+                                <tr>
+                                    <td><code>question</code></td>
+                                    <td>La pregunta</td>
+                                    <td>¿Cuál es la capital?</td>
+                                </tr>
+                                <tr>
+                                    <td><code>choice_a</code></td>
+                                    <td>Opción A</td>
+                                    <td>París</td>
+                                </tr>
+                                <tr>
+                                    <td><code>choice_b</code></td>
+                                    <td>Opción B</td>
+                                    <td>Londres</td>
+                                </tr>
+                                <tr>
+                                    <td><code>choice_c</code></td>
+                                    <td>Opción C</td>
+                                    <td>Madrid</td>
+                                </tr>
+                                <tr>
+                                    <td><code>choice_d</code></td>
+                                    <td>Opción D</td>
+                                    <td>Roma</td>
+                                </tr>
+                                <tr>
+                                    <td><code>answer</code></td>
+                                    <td>Correcta</td>
+                                    <td>a, b, c, d (o 0, 1, 2, 3)</td>
+                                </tr>
+                                <tr>
+                                    <td><code>imagen</code></td>
+                                    <td>¿Tiene imagen?</td>
+                                    <td>si o no</td>
+                                </tr>
+                                <tr>
+                                    <td><code>nombre_imagen</code></td>
+                                    <td>Archivo</td>
+                                    <td>foto1.jpg</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Ejemplo Completo:</h3>
+                    <div class="code-block">
+<code>idpregunta,category,value,question,choice_a,choice_b,choice_c,choice_d,answer,imagen,nombre_imagen
+1,Historia,100,¿Quién descubrió América?,Colón,Magallanes,Vespucio,Cortés,a,no,
+2,Geografía,200,¿Qué país es?,México,Brasil,Argentina,Chile,a,si,pais1.jpg</code>
+                    </div>
+                </div>
+
+                <div class="alert alert-success">
+                    <strong>✨ Recomendación:</strong> Crea al menos 20 preguntas por categoría 
+                    para tener variedad en cada juego.
+                </div>
+            </section>
+
+            <!-- Sección: Imágenes -->
+            <section id="imagenes" class="manual-section">
+                <h2>🖼️ Agregar Imágenes a las Preguntas</h2>
+                
+                <div class="card step-card">
+                    <div class="step-number">1</div>
+                    <h3>Crear la Carpeta</h3>
+                    <p>Dentro de la carpeta <code>data/</code>, crea una carpeta con el <strong>mismo nombre</strong> que tu archivo CSV (sin extensión).</p>
+                    <div class="example-box">
+                        <strong>Ejemplo:</strong><br>
+                        Si tu archivo se llama <code>preguntas_historia.csv</code><br>
+                        Crea la carpeta: <code>data/preguntas_historia/</code>
+                    </div>
+                </div>
+
+                <div class="card step-card">
+                    <div class="step-number">2</div>
+                    <h3>Copiar las Imágenes</h3>
+                    <p>Coloca todas tus imágenes dentro de esa carpeta.</p>
+                    <div class="folder-structure">
+                        <div class="folder">📁 data/</div>
+                        <div class="folder indent">📄 preguntas_historia.csv</div>
+                        <div class="folder indent">📁 preguntas_historia/</div>
+                        <div class="folder indent2">🖼️ bolivar.jpg</div>
+                        <div class="folder indent2">🖼️ batalla.png</div>
+                        <div class="folder indent2">🖼️ mapa.jpg</div>
+                    </div>
+                </div>
+
+                <div class="card step-card">
+                    <div class="step-number">3</div>
+                    <h3>Configurar el CSV</h3>
+                    <p>En tu archivo CSV, marca las preguntas con imagen:</p>
+                    <div class="code-block">
+<code>...,answer,imagen,nombre_imagen
+...,a,si,bolivar.jpg
+...,b,si,batalla.png
+...,c,no,</code>
+                    </div>
+                </div>
+
+                <div class="alert alert-info">
+                    <strong>📐 Formatos soportados:</strong> JPG, PNG, GIF, WebP<br>
+                    <strong>📏 Tamaño recomendado:</strong> 800x600 píxeles, menos de 500KB
+                </div>
+            </section>
+
+            <!-- Sección: Mosaico -->
+            <section id="mosaico" class="manual-section">
+                <h2>🧩 Crear el Mosaico Revelador</h2>
+                
+                <div class="card">
+                    <h3>¿Qué es el Mosaico?</h3>
+                    <p class="highlight-text">
+                        El mosaico es una imagen oculta que se revela progresivamente conforme 
+                        los equipos responden correctamente. ¡Es una sorpresa emocionante al final!
+                    </p>
+                </div>
+
+                <div class="card step-card">
+                    <div class="step-number">1</div>
+                    <h3>Preparar la Imagen</h3>
+                    <p>Elige una imagen significativa:</p>
+                    <ul>
+                        <li>✓ Escudo institucional</li>
+                        <li>✓ Logo del evento</li>
+                        <li>✓ Monumento emblemático</li>
+                        <li>✓ Bandera nacional</li>
+                    </ul>
+                </div>
+
+                <div class="card step-card">
+                    <div class="step-number">2</div>
+                    <h3>Nombrar el Archivo</h3>
+                    <p>El archivo DEBE llamarse exactamente:</p>
+                    <div class="code-block important">
+                        <code>MOSAICO.jpg</code> o <code>MOSAICO.png</code>
+                    </div>
+                    <div class="alert alert-warning">
+                        ⚠️ <strong>Importante:</strong> El nombre debe estar en MAYÚSCULAS
+                    </div>
+                </div>
+
+                <div class="card step-card">
+                    <div class="step-number">3</div>
+                    <h3>Colocar en la Carpeta</h3>
+                    <p>Coloca el archivo en la misma carpeta que las imágenes:</p>
+                    <div class="folder-structure">
+                        <div class="folder">📁 data/</div>
+                        <div class="folder indent">📁 preguntas_historia/</div>
+                        <div class="folder indent2">🖼️ bolivar.jpg</div>
+                        <div class="folder indent2">🖼️ batalla.png</div>
+                        <div class="folder indent2 highlight">🎨 MOSAICO.jpg ← ¡Aquí!</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Especificaciones Técnicas:</h3>
+                    <div class="specs-grid">
+                        <div class="spec-item">
+                            <strong>Formato:</strong> JPG o PNG
+                        </div>
+                        <div class="spec-item">
+                            <strong>Tamaño:</strong> 1000x1000 píxeles (cuadrada)
+                        </div>
+                        <div class="spec-item">
+                            <strong>Peso:</strong> Menos de 1MB
+                        </div>
+                        <div class="spec-item">
+                            <strong>Contenido:</strong> Diseño simple y reconocible
+                        </div>
+                    </div>
+                </div>
+
+                <div class="alert alert-success">
+                    <strong>✨ Efecto Visual:</strong> Cuando un equipo responde correctamente, 
+                    se revela una pieza del mosaico. ¡Al completar todas las preguntas, 
+                    la imagen completa aparece en el centro con confetti! 🎉
+                </div>
+            </section>
+
+            <!-- Sección: Cómo Jugar -->
+            <section id="jugar" class="manual-section">
+                <h2>🎮 Cómo Jugar</h2>
+                
+                <div class="card step-card">
+                    <div class="step-number">1</div>
+                    <h3>Cargar las Preguntas</h3>
+                    <p>En el juego, haz clic en el botón <strong>"📂 Cargar"</strong> y selecciona tu archivo CSV.</p>
+                </div>
+
+                <div class="card step-card">
+                    <div class="step-number">2</div>
+                    <h3>Seleccionar una Pregunta</h3>
+                    <p>Haz clic en cualquier casilla del tablero para abrir la pregunta.</p>
+                </div>
+
+                <div class="card step-card">
+                    <div class="step-number">3</div>
+                    <h3>Presionar el Buzzer</h3>
+                    <p>El primer equipo en presionar su botón gana el turno. Usa el teclado (1-9 y 0) para los equipos 1 al 10.</p>
+                    <div class="keyboard-shortcuts">
+                        <div class="shortcut">
+                            <kbd>1</kbd> <span>Equipo 1</span>
+                        </div>
+                        <div class="shortcut">
+                            <kbd>2</kbd> <span>Equipo 2</span>
+                        </div>
+                        <div class="shortcut">
+                            <kbd>3</kbd> <span>Equipo 3</span>
+                        </div>
+                        <div class="shortcut">
+                            <kbd>4</kbd> <span>Equipo 4</span>
+                        </div>
+                        <div class="shortcut">
+                            <kbd>5</kbd> <span>Equipo 5</span>
+                        </div>
+                        <div class="shortcut">
+                            <kbd>6</kbd> <span>Equipo 6</span>
+                        </div>
+                        <div class="shortcut">
+                            <kbd>7</kbd> <span>Equipo 7</span>
+                        </div>
+                        <div class="shortcut">
+                            <kbd>8</kbd> <span>Equipo 8</span>
+                        </div>
+                        <div class="shortcut">
+                            <kbd>9</kbd> <span>Equipo 9</span>
+                        </div>
+                        <div class="shortcut">
+                            <kbd>0</kbd> <span>Equipo 10</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card step-card">
+                    <div class="step-number">4</div>
+                    <h3>Responder</h3>
+                    <p>El equipo tiene 10 segundos para seleccionar y enviar su respuesta.</p>
+                    <div class="keyboard-shortcuts">
+                        <div class="shortcut">
+                            <kbd>A</kbd><kbd>B</kbd><kbd>C</kbd><kbd>D</kbd> 
+                            <span>Seleccionar opción</span>
+                        </div>
+                        <div class="shortcut">
+                            <kbd>Enter</kbd> <span>Enviar respuesta</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Sistema de Puntaje:</h3>
+                    <div class="scoring-rules">
+                        <div class="rule correct">
+                            <strong>✅ Respuesta Correcta:</strong> Se suma el valor de la pregunta
+                        </div>
+                        <div class="rule incorrect">
+                            <strong>❌ Respuesta Incorrecta:</strong> Se resta el valor + Otro equipo puede intentar
+                        </div>
+                        <div class="rule timeout">
+                            <strong>⏰ Tiempo Agotado:</strong> Se resta el valor + Pasa al siguiente equipo
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Funciones Especiales:</h3>
+                    <ul class="features-list">
+                        <li><strong>🔒 Ocultar Respuestas:</strong> Modo moderador para preguntas abiertas</li>
+                        <li><strong>⚙️ Ajustar Puntajes:</strong> Clic derecho sobre un equipo para correcciones</li>
+                        <li><strong>🔄 Reiniciar:</strong> Comienza un nuevo juego desde cero</li>
+                        <li><strong>❌ Cancelar:</strong> Presiona ESC para saltar una pregunta</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Sección de Ayuda Rápida -->
+            <section id="ayuda" class="manual-section">
+                <h2>❓ Solución de Problemas</h2>
+                
+                <div class="card faq-card">
+                    <h4>P: Las imágenes no se ven</h4>
+                    <p><strong>R:</strong> Verifica que:</p>
+                    <ul>
+                        <li>✓ La carpeta tenga el mismo nombre que el CSV</li>
+                        <li>✓ Los nombres de archivo coincidan exactamente</li>
+                        <li>✓ Las imágenes estén en formato JPG o PNG</li>
+                    </ul>
+                </div>
+
+                <div class="card faq-card">
+                    <h4>P: El mosaico no aparece</h4>
+                    <p><strong>R:</strong> Asegúrate de que:</p>
+                    <ul>
+                        <li>✓ El archivo se llame exactamente <code>MOSAICO.jpg</code> (mayúsculas)</li>
+                        <li>✓ Esté en la carpeta correcta</li>
+                        <li>✓ Sea una imagen cuadrada</li>
+                    </ul>
+                </div>
+
+                <div class="card faq-card">
+                    <h4>P: No puedo conectar desde otro dispositivo</h4>
+                    <p><strong>R:</strong> Verifica:</p>
+                    <ul>
+                        <li>✓ Ambos dispositivos estén en la misma red WiFi</li>
+                        <li>✓ Usar la IP correcta del servidor</li>
+                        <li>✓ El firewall no bloquee el puerto 5000</li>
+                    </ul>
+                </div>
+
+                <div class="card faq-card">
+                    <h4>P: El archivo CSV da error al cargar</h4>
+                    <p><strong>R:</strong> Revisa que:</p>
+                    <ul>
+                        <li>✓ Todas las columnas estén presentes</li>
+                        <li>✓ No haya filas vacías</li>
+                        <li>✓ Los IDs sean únicos</li>
+                        <li>✓ Las respuestas sean a, b, c, d (o 0-3)</li>
+                    </ul>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="manual-footer">
+            <div class="footer-content">
+                <p>🎮 Painani del Conocimiento - Escuela Superior de Guerra</p>
+                <p>Versión 2.0 | 2025</p>
+                <a href="/" class="btn-home">🏠 Volver al Juego</a>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Navegación activa
+        const sections = document.querySelectorAll('.manual-section');
+        const navItems = document.querySelectorAll('.nav-item');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navItems.forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('href') === `#${current}`) {
+                    item.classList.add('active');
+                }
+            });
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎮 Painani del Conocimiento - Escuela Superior de Guerra</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎮</text></svg>">
+</head>
+<body>
+    <!-- SPLASH SCREEN -->
+    <div id="splash-screen">
+        <div class="splash-content">
+            <div class="splash-logo">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo ESG">
+                <!-- O si prefieres un emoji/texto: -->
+                <!-- <div class="logo-text">🎮</div> -->
+            </div>
+            <h1 class="splash-title">PAINANI DEL CONOCIMIENTO</h1>
+            <p class="splash-subtitle">Escuela Superior de Guerra</p>
+            <div class="splash-credits">
+                <p class="credits-name">Centro Militar de Entrenamiento Sistematizado</p>
+                <p class="credits-year">© 2025</p>
+            </div>
+            <div class="splash-loader">
+                <div class="loader-bar"></div>
+            </div>
+            <p class="splash-hint">Cargando...</p>
+        </div>
+    </div>
+
+    <div id="app">
+        <!-- BARRA SUPERIOR -->
+        <header id="header">
+            <div id="players-bar">
+                <!-- Equipos generados dinámicamente -->
+            </div>
+            
+            <!-- Menú contextual para ajustar puntajes -->
+            <div id="score-menu" class="context-menu" style="display: none;">
+                <div class="menu-header">⚙️ Ajustar Puntaje</div>
+                <div class="menu-item" onclick="adjustScore('current', 500)">➕ Sumar +500</div>
+                <div class="menu-item" onclick="adjustScore('current', 400)">➕ Sumar +400</div>
+                <div class="menu-item" onclick="adjustScore('current', 300)">➕ Sumar +300</div>
+                <div class="menu-item" onclick="adjustScore('current', 200)">➕ Sumar +200</div>
+                <div class="menu-item" onclick="adjustScore('current', 100)">➕ Sumar +100</div>
+                <div class="menu-separator"></div>
+                <div class="menu-item" onclick="adjustScore('current', -100)">➖ Restar -100</div>
+                <div class="menu-item" onclick="adjustScore('current', -200)">➖ Restar -200</div>
+                <div class="menu-item" onclick="adjustScore('current', -300)">➖ Restar -300</div>
+                <div class="menu-item" onclick="adjustScore('current', -400)">➖ Restar -400</div>
+                <div class="menu-item" onclick="adjustScore('current', -500)">➖ Restar -500</div>
+                <div class="menu-separator"></div>
+                <div class="menu-item" onclick="adjustScoreByQuestionValue('current', 1)">➕ Sumar valor de pregunta</div>
+                <div class="menu-item" onclick="adjustScoreByQuestionValue('current', -1)">➖ Restar valor de pregunta</div>
+                <div class="menu-separator"></div>
+                <div class="menu-item" onclick="editScore()">✏️ Editar manualmente...</div>
+                <div class="menu-item" onclick="resetPlayerScore()">🔄 Reiniciar a 0</div>
+            </div>
+            
+            <!-- Barra de estado -->
+            <div id="status-bar" class="info">
+                🎯 Selecciona una casilla para abrir una pregunta
+            </div>
+            
+            <!-- Panel de ajuste rápido (visible en modo tablero) -->
+            <div id="quick-adjust-panel" style="display: none;">
+                <div class="quick-adjust-header">⚡ Ajuste Rápido de Puntajes</div>
+                <div class="quick-adjust-content">
+                    <div id="quick-adjust-players">
+                        <!-- Ajustes rápidos generados dinámicamente -->
+                    </div>
+                    <button class="btn-toggle-adjust" onclick="toggleQuickAdjust()">✕ Cerrar Panel</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- ÁREA CENTRAL -->
+        <main id="main-content">
+            <!-- TABLERO -->
+            <div id="board-container">
+                <div id="board">
+                    <!-- Generado dinámicamente por JS -->
+                </div>
+            </div>
+
+            <!-- PANEL DE PREGUNTA -->
+            <div id="question-panel" style="display: none;">
+                <div class="question-header">
+                    <span id="question-category">📚 Categoría</span>
+                    <span id="question-value">💰 Valor: 0</span>
+                </div>
+                <div id="question-text">Pregunta aquí...</div>
+                
+                <div id="choices-container">
+                    <!-- Opciones a-d -->
+                </div>
+                
+                <div id="question-footer">
+                    <!--div id="question-status">
+                        ⏳ Esperando timbre...
+                    </div-->
+                    <div id="question-status" style="display: none;">
+                        <!-- Contenedor oculto pero presente en el DOM -->
+                    </div>
+                    <div id="timer-container">
+                        <div class="timer-label">⏱️ Tiempo</div>
+                        <div id="timer">—</div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- CONTROLES INFERIORES -->
+        <footer id="controls">
+            <!-- Modo Tablero -->
+            <div id="board-controls">
+                <button class="btn-warning" onclick="toggleQuickAdjust()">⚙️ Ajustar Puntajes</button>
+                <div class="team-count-control">
+                    <label for="team-count-select">👥 Equipos</label>
+                    <div class="team-count-select-wrapper">
+                        <select id="team-count-select"></select>
+                    </div>
+                </div>
+                <label class="checkbox-container">
+                    <input type="checkbox" id="hide-answers" onchange="toggleHideAnswers()">
+                    <span>🔒 Ocultar respuestas</span>
+                </label>
+                <button class="btn-primary" onclick="loadData()">📂 Cargar</button>
+                <input type="file" id="file-input" accept=".json,.csv" style="display: none;" />
+                <button class="btn-primary" onclick="resetGame()">🔄 Reiniciar</button>
+                <a href="/manual" target="_blank" class="btn-info" style="display: inline-block; padding: 12px 28px; border-radius: 12px; text-decoration: none; background: linear-gradient(135deg, #9C27B0 0%, #BA68C8 100%); color: white; font-size: 15px; font-weight: 600;">📖 Manual</a>
+                <button class="btn-secondary" onclick="confirmExit()">❌ Salir</button>
+            </div>
+
+            <!-- Modo Pregunta (respuestas visibles) -->
+            <div id="panel-controls" style="display: none;">
+                <button class="btn-success" onclick="submitAnswer()">✓ Responder</button>
+                <button class="btn-secondary" onclick="cancelQuestion()">✕ Cancelar</button>
+            </div>
+
+            <!-- Modo Moderador (respuestas ocultas) -->
+            <div id="moderator-controls" style="display: none;">
+                <button class="btn-success" onclick="moderatorCorrect()">✓ Correcto</button>
+                <button class="btn-danger" onclick="moderatorIncorrect()">✕ Incorrecto</button>
+                <button class="btn-secondary" onclick="cancelQuestion()">↩ Cancelar</button>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Socket.IO -->
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    
+    <!-- Script principal -->
+    <script src="{{ url_for('static', filename='js/game.js') }}"></script>
+</body>
+</html>
