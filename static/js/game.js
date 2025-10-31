@@ -446,6 +446,15 @@ socket.on('stop_timer', () => {
     stopTimer();
 });
 
+
+// Tiempo agotado sin calificación automática (opción A)
+socket.on('time_up', (data) => {
+    console.log('?? Tiempo agotado (esperando decisión del moderador)');
+    stopTimer();
+    enableChoices(false);
+    setStatus('Tiempo agotado. Esperando decisión del moderador.', 'info');
+});
+
 socket.on('answer_result', (data) => {
     console.log('📝 Resultado:', data);
     gameState.answerPending = false;
@@ -1141,7 +1150,7 @@ function startTimer(seconds) {
                     submitAnswer();
                 } else {
                     console.log('⏰ Tiempo agotado sin respuesta seleccionada. Notificando timeout.');
-                    socket.emit('timeout');
+                    socket.emit('time_up');
                 }
             }
         }

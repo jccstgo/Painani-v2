@@ -1,0 +1,52 @@
+/* Estilos específicos del panel de administración */
+
+/* Layout base del panel */
+html, body { height: auto; }
+body { background: #0a0f1a; color: #fff; overflow: auto !important; min-height: 100vh; }
+.admin-container { max-width: 900px; margin: 32px auto; padding: 24px; background: rgba(255,255,255,0.04); border-radius: 16px; border: 1px solid rgba(255,255,255,0.08); }
+.admin-header { display:flex; align-items:center; justify-content:space-between; margin-bottom: 16px; }
+.admin-conn { opacity: 0.8; font-size: 13px; }
+.admin-title { font-size: 22px; font-weight: 700; letter-spacing: 0.5px; }
+.admin-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.card { background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 16px; }
+.card h3 { margin: 0 0 8px; font-size: 16px; font-weight: 700; color: #9ecbff; }
+.control { display:flex; align-items:center; gap: 12px; }
+.control.wrap { flex-wrap: wrap; align-items: center; }
+.gap-8 { gap: 8px !important; }
+.mb-8 { margin-bottom: 8px !important; }
+.mt-10 { margin-top: 10px !important; }
+.grid-span-full { grid-column: 1 / -1; }
+.hidden { display: none !important; }
+.control label { font-weight: 600; }
+select { background: #0f1726; color: #fff; border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; padding: 10px 12px; font-size: 14px; }
+.status { margin-top: 16px; padding: 10px 12px; border-radius: 8px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08); font-size: 14px; }
+.muted { opacity: 0.8; }
+
+/* Contenedor del tablero de administración */
+.admin-board-grid {
+  display: grid;
+  gap: 8px;
+  grid-auto-rows: 56px;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  padding: 12px;
+  background: rgba(255,255,255,0.03);
+}
+
+/* Controles de respuestas (más grandes para evitar clics accidentales) */
+.admin-answers { gap: 16px !important; flex-wrap: wrap; }
+.admin-answer-btn { font-size: 20px; padding: 14px 20px; border-radius: 12px; min-width: 64px; }
+
+/* Bloque de información de respuesta correcta (solo admin) */
+.admin-info { margin-top: 10px; padding: 12px; background: rgba(255,255,255,0.04); border: 1px dashed rgba(255,255,255,0.15); border-radius: 10px; font-size: 14px; }
+.kv { opacity: 0.9; }
+.info-title { font-weight: 700; color: #9ecbff; margin-bottom: 6px; }
+.answer-label { font-weight: 600; min-width: 120px; }
+
+/* Lista de puntajes */
+.scores-list { display: flex; flex-direction: column; gap: 10px; }
+.score-row { display: flex; align-items: center; gap: 12px; background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 10px; }
+.score-name { min-width: 110px; font-weight: 700; color: #9ecbff; }
+.score-value { min-width: 80px; text-align: right; font-weight: 700; color: #FFD700; }
+.score-controls { display:flex; gap: 8px; flex-wrap: wrap; }
+.btn-small { padding: 8px 12px; border-radius: 10px; font-size: 14px; }

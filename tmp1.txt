@@ -1,0 +1,40 @@
+    """Abre una pregunta del tablero"""
+    cat_idx = data.get('cat_idx')
+    clue_idx = data.get('clue_idx')
+    
+    result = game.open_question(cat_idx, clue_idx)
+    
+    if 'error' in result:
+        emit('error', result, broadcast=False)
+    else:
+        # Enviar pregunta (con o sin respuestas según modo)
+        question_data = result.copy()
+        if game.hide_answers:
+            question_data.pop('answer', None)
+            question_data.pop('choices', None)
+        
+        emit('question_opened', question_data, broadcast=True)
+
+        # Enviar version completa al room de administradores
+        admin_payload = result.copy()
+        try:
+            ans_idx = int(admin_payload.get('answer', -1))
+        except Exception:
+            ans_idx = -1
+        choices = admin_payload.get('choices') or []
+        if isinstance(choices, list) and 0 <= ans_idx < len(choices):
+            admin_payload['answer_choice_text'] = choices[ans_idx]
+        socketio.emit('question_opened_admin', admin_payload, room='admins')
+
+@socketio.on('buzzer_press')
+def handle_buzzer(data):
+    """Un jugador presiona su buzzer"""
+    player_idx = data.get('player')
+    
+    result = game.buzzer_press(player_idx)
+    
+    if 'error' in result:
+        emit('error', result, broadcast=False)
+    else:
+        emit('buzzer_activated', result, broadcast=True)
+        # Iniciar temporizador del lado del cliente

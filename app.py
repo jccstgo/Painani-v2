@@ -277,13 +277,20 @@ def handle_cancel():
 @socketio.on('timeout')
 def handle_timeout():
     """Tiempo agotado"""
+    # Mantenemos por compatibilidad, pero no se usa en la nueva lógica
     result = game.timeout()
-    
     emit('answer_result', result, broadcast=True)
     emit('scores_update', {'scores': game.player_scores}, broadcast=True)
-    
     if result.get('close_question'):
         emit('close_question', {}, broadcast=True)
+
+@socketio.on('time_up')
+def handle_time_up():
+    """Tiempo agotado sin calificación automática"""
+    result = game.time_up()
+    # Detener temporizador en clientes y notificar estado
+    emit('stop_timer', {}, broadcast=True)
+    emit('time_up', result, broadcast=True)
 
 @socketio.on('toggle_hide_answers')
 def handle_toggle_hide(data):

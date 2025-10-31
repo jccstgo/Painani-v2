@@ -322,6 +322,21 @@ class GameState:
         if self.current_buzzer is not None:
             return self.submit_answer(self.current_buzzer, -1)  # Respuesta inválida
         return {"error": "No hay jugador activo"}
+
+    def time_up(self) -> Dict:
+        """Tiempo agotado sin calificar automáticamente.
+        No modifica puntajes ni estado de la pregunta; solo detiene el temporizador
+        para que el moderador decida (correcto/incorrecto/cancelar).
+        """
+        if self.current_question is None:
+            return {"error": "No hay pregunta activa"}
+        self.timer_active = False
+        return {
+            "success": True,
+            "time_up": True,
+            "current_buzzer": self.current_buzzer,
+            "tried_players": list(self.tried_players),
+        }
         
     def adjust_score(self, player_idx: int, delta: int):
         """Ajusta el puntaje de un jugador manualmente"""
