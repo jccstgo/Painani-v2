@@ -25,26 +25,45 @@
     --gray-dark: #424242;
     --shadow: rgba(0, 0, 0, 0.2);
     --shadow-strong: rgba(0, 0, 0, 0.4);
-    
+
     /* Efectos */
     --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --glow: 0 0 20px rgba(33, 150, 243, 0.4);
+
+    /* Espaciados y radios */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --space-xs: 8px;
+    --space-sm: 12px;
+    --space-md: 16px;
+    --space-lg: 24px;
+    --space-xl: 32px;
+
+    /* Fondos */
+    --glass: rgba(255, 255, 255, 0.05);
+    --glass-strong: rgba(255, 255, 255, 0.1);
+    --glass-border: rgba(255, 215, 0, 0.3);
 }
 
 body {
-    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Oxygen', 
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Oxygen',
                  'Ubuntu', 'Cantarell', sans-serif;
     background: linear-gradient(135deg, #0a1929 0%, #1e3a5f 100%);
-    overflow: hidden;
-    height: 100vh;
     color: var(--white);
+    min-height: 100vh;
+    overflow-x: hidden;
+    padding: 0 clamp(12px, 2vw, 24px);
 }
 
 #app {
     display: flex;
     flex-direction: column;
-    height: 100vh;
     position: relative;
+    min-height: 100vh;
+    max-width: 1920px;
+    margin: 0 auto;
+    width: 100%;
 }
 
 /* Efecto de fondo animado */
@@ -55,11 +74,12 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background: 
+    background:
         radial-gradient(circle at 20% 50%, rgba(33, 150, 243, 0.1) 0%, transparent 50%),
         radial-gradient(circle at 80% 80%, rgba(255, 215, 0, 0.1) 0%, transparent 50%);
     pointer-events: none;
     z-index: 0;
+    border-radius: inherit;
 }
 
 #app > * {
@@ -71,27 +91,34 @@ body {
    HEADER Y JUGADORES
    =========================== */
 #header {
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--glass);
     backdrop-filter: blur(10px);
-    padding: 20px 30px;
-    border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+    padding: clamp(16px, 2vw, 28px);
+    border-bottom: 2px solid var(--glass-border);
     box-shadow: 0 4px 20px var(--shadow);
     position: relative;
     z-index: 200;
+    border-radius: var(--radius-lg);
+    margin-bottom: clamp(16px, 2vh, 28px);
 }
 
 #players-bar {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    gap: 16px;
-    margin-bottom: 16px;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: var(--space-md);
+    margin-bottom: var(--space-md);
+    align-items: stretch;
 }
 
 .player {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: var(--space-sm);
     animation: slideDown 0.5s ease backwards;
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: var(--radius-lg);
+    padding: var(--space-sm);
+    border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 @keyframes slideDown {
@@ -106,11 +133,11 @@ body {
 }
 
 .buzzer-btn {
-    padding: 14px 10px;
-    font-size: 15px;
+    padding: clamp(12px, 1.4vw, 16px);
+    font-size: clamp(0.85rem, 1vw, 1rem);
     font-weight: bold;
     border: none;
-    border-radius: 12px;
+    border-radius: var(--radius-md);
     cursor: pointer;
     background: linear-gradient(135deg, #4CAF50 0%, #66BB6A 100%);
     color: var(--white);
@@ -184,14 +211,14 @@ body {
 
 .score {
     text-align: center;
-    font-size: 22px;
+    font-size: clamp(1.1rem, 1.5vw, 1.4rem);
     font-weight: bold;
     color: var(--accent-gold);
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-    padding: 8px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
-    backdrop-filter: blur(5px);
+    padding: var(--space-xs) var(--space-sm);
+    background: var(--glass-strong);
+    border-radius: var(--radius-sm);
+    backdrop-filter: blur(6px);
 }
 
 /* Temporizador */
@@ -200,17 +227,17 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 10px;
-    padding: 18px 28px;
+    gap: var(--space-sm);
+    padding: clamp(16px, 1.8vw, 24px);
     background: rgba(0, 0, 0, 0.55);
-    border-radius: 16px;
+    border-radius: var(--radius-lg);
     border: 2px solid rgba(255, 215, 0, 0.5);
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
     width: min(320px, 100%);
 }
 
 .timer-label {
-    font-size: 22px;
+    font-size: clamp(1rem, 1.2vw, 1.35rem);
     font-weight: bold;
     color: var(--accent-gold);
     text-transform: uppercase;
@@ -220,15 +247,15 @@ body {
 #timer {
     background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
     color: #FF3333;
-    font-size: 80px;
+    font-size: clamp(2.8rem, 4vw, 5rem);
     font-weight: bold;
-    padding: 20px 36px;
+    padding: clamp(16px, 1.8vw, 28px) clamp(28px, 3vw, 40px);
     border-radius: 14px;
-    min-width: 200px;
+    min-width: clamp(160px, 20vw, 260px);
     text-align: center;
     font-family: 'Courier New', monospace;
     border: 3px solid var(--accent-gold);
-    box-shadow: 
+    box-shadow:
         0 0 20px rgba(255, 51, 51, 0.5),
         inset 0 0 20px rgba(255, 51, 51, 0.2);
     animation: timerGlow 2s infinite;
@@ -249,21 +276,21 @@ body {
 
 /* Panel de ajuste rápido */
 #quick-adjust-panel {
-    margin-top: 16px;
-    background: rgba(255, 255, 255, 0.05);
+    margin-top: var(--space-md);
+    background: var(--glass);
     backdrop-filter: blur(10px);
-    border-radius: 12px;
-    border: 2px solid rgba(255, 215, 0, 0.3);
-    padding: 16px;
+    border-radius: var(--radius-md);
+    border: 2px solid var(--glass-border);
+    padding: var(--space-md);
     animation: slideDown 0.3s ease;
 }
 
 .quick-adjust-header {
     text-align: center;
-    font-size: 16px;
+    font-size: clamp(0.9rem, 1vw, 1.05rem);
     font-weight: bold;
     color: var(--accent-gold);
-    margin-bottom: 16px;
+    margin-bottom: var(--space-md);
     text-transform: uppercase;
     letter-spacing: 1px;
 }
@@ -271,19 +298,19 @@ body {
 .quick-adjust-content {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: var(--space-sm);
 }
 
 #quick-adjust-players {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 12px;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: var(--space-sm);
 }
 
 .player-adjust {
-    background: rgba(255, 255, 255, 0.05);
-    padding: 12px;
-    border-radius: 8px;
+    background: var(--glass);
+    padding: var(--space-sm);
+    border-radius: var(--radius-sm);
     border: 1px solid rgba(255, 215, 0, 0.2);
 }
 
@@ -292,23 +319,23 @@ body {
     text-align: center;
     font-weight: bold;
     color: var(--white);
-    margin-bottom: 8px;
-    font-size: 14px;
+    margin-bottom: var(--space-xs);
+    font-size: clamp(0.8rem, 1vw, 0.95rem);
 }
 
 .adjust-buttons {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 8px;
+    gap: var(--space-xs);
 }
 
 .btn-adjust {
-    padding: 8px 16px;
+    padding: clamp(6px, 0.8vw, 10px) clamp(12px, 1.3vw, 18px);
     border: none;
-    border-radius: 6px;
+    border-radius: var(--radius-sm);
     font-weight: bold;
-    font-size: 14px;
+    font-size: clamp(0.75rem, 0.9vw, 0.9rem);
     cursor: pointer;
     transition: var(--transition);
     box-shadow: 0 2px 8px var(--shadow);
@@ -335,7 +362,7 @@ body {
 }
 
 .player-quick-score {
-    font-size: 18px;
+    font-size: clamp(1rem, 1.2vw, 1.2rem);
     font-weight: bold;
     color: var(--accent-gold);
     min-width: 60px;
@@ -344,12 +371,12 @@ body {
 
 .btn-toggle-adjust {
     grid-column: 1 / -1;
-    margin-top: 8px;
-    padding: 10px 20px;
+    margin-top: var(--space-xs);
+    padding: clamp(8px, 1vw, 12px) clamp(16px, 1.8vw, 24px);
     background: linear-gradient(135deg, #757575 0%, #9E9E9E 100%);
     color: var(--white);
     border: none;
-    border-radius: 8px;
+    border-radius: var(--radius-md);
     font-weight: bold;
     cursor: pointer;
     transition: var(--transition);
@@ -362,12 +389,12 @@ body {
 
 /* Barra de estado */
 #status-bar {
-    padding: 14px 20px;
+    padding: clamp(12px, 1.5vw, 18px) clamp(16px, 2vw, 28px);
     text-align: center;
-    font-size: 16px;
-    font-weight: bold;
-    border-radius: 12px;
-    margin-top: 12px;
+    font-size: clamp(0.95rem, 1vw, 1.1rem);
+    font-weight: 700;
+    border-radius: var(--radius-md);
+    margin-top: var(--space-sm);
     transition: var(--transition);
     box-shadow: 0 4px 15px var(--shadow);
     backdrop-filter: blur(10px);
@@ -382,7 +409,7 @@ body {
 #status-bar.correct {
     background: linear-gradient(135deg, rgba(76, 175, 80, 0.95) 0%, rgba(102, 187, 106, 0.95) 100%);
     color: var(--white);
-    font-size: 28px;
+    font-size: clamp(1.4rem, 2vw, 1.8rem);
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     animation: successPulse 0.5s ease;
     border: 2px solid var(--accent-gold);
@@ -396,7 +423,7 @@ body {
 #status-bar.incorrect {
     background: linear-gradient(135deg, rgba(244, 67, 54, 0.95) 0%, rgba(229, 115, 115, 0.95) 100%);
     color: var(--white);
-    font-size: 28px;
+    font-size: clamp(1.4rem, 2vw, 1.8rem);
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     animation: errorShake 0.5s ease;
     border: 2px solid var(--white);
@@ -515,7 +542,10 @@ body {
 #main-content {
     flex: 1;
     overflow: auto;
-    padding: 30px;
+    padding: clamp(16px, 2vw, 32px) 0 clamp(24px, 3vh, 48px);
+    display: flex;
+    flex-direction: column;
+    gap: clamp(20px, 3vh, 36px);
 }
 
 /* Scrollbar personalizada */
@@ -546,21 +576,23 @@ body {
 
 #board {
     display: grid;
-    gap: 12px;
+    gap: var(--space-md);
     height: 100%;
-    max-width: 1600px;
+    width: min(100%, 1600px);
     margin: 0 auto;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    align-content: start;
 }
 
 .board-cell {
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 16px;
+    border-radius: var(--radius-lg);
     font-weight: bold;
     cursor: pointer;
     transition: var(--transition);
-    min-height: 90px;
+    min-height: clamp(88px, 10vw, 140px);
     position: relative;
     overflow: hidden;
 }
@@ -584,9 +616,9 @@ body {
 .board-cell.header {
     background: linear-gradient(135deg, rgba(255, 215, 0, 0.9) 0%, rgba(255, 193, 7, 0.9) 100%);
     color: var(--primary-dark);
-    font-size: 22px;
+    font-size: clamp(1rem, 1.3vw, 1.35rem);
     cursor: default;
-    padding: 16px;
+    padding: var(--space-md);
     text-align: center;
     border: 3px solid rgba(255, 255, 255, 0.3);
     box-shadow: 0 4px 20px rgba(255, 215, 0, 0.3);
@@ -597,7 +629,7 @@ body {
 .board-cell.clue {
     background: linear-gradient(135deg, #0a1929 0%, #1e3a5f 100%);
     color: var(--accent-gold);
-    font-size: 32px;
+    font-size: clamp(1.5rem, 2.4vw, 2.4rem);
     border: 3px solid var(--accent-gold);
     box-shadow: 0 6px 20px var(--shadow);
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
@@ -634,25 +666,24 @@ body {
    PANEL DE PREGUNTA
    =========================== */
 #question-panel {
-    /*max-width: 1100px;*/
-    max-width: 99%;
-    width: 98%;
+    max-width: 1100px;
+    width: 100%;
     margin: 0 auto;
-    padding: 30px;
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(20px);
+    padding: clamp(20px, 2vw, 32px);
+    background: var(--glass);
+    backdrop-filter: blur(18px);
     border-radius: 24px;
-    border: 2px solid rgba(255, 215, 0, 0.3);
+    border: 2px solid var(--glass-border);
     box-shadow: 0 8px 32px var(--shadow-strong);
     animation: slideInUp 0.4s ease;
     position: relative;
     z-index: 100;
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    max-height: calc(100vh - 200px); 
-    height: auto;
-    overflow: hidden; 
+    gap: var(--space-lg);
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 @keyframes slideInUp {
@@ -669,58 +700,56 @@ body {
 .question-header {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 30px;
-    /*font-size: 16px;*/
-    font-size: 28px;
-    font-weight: bold;
+    align-items: center;
+    gap: var(--space-md);
+    margin-bottom: var(--space-md);
+    font-size: clamp(1.25rem, 2vw, 1.8rem);
+    font-weight: 700;
     color: var(--accent-gold);
     text-transform: uppercase;
     letter-spacing: 1px;
 }
 
 #question-text {
-    font-size: 56px;
-    font-weight: bold;
-    margin-bottom: 20px;
-    line-height: 1.3;
+    font-size: clamp(1.8rem, 3vw, 3.2rem);
+    font-weight: 700;
+    line-height: 1.35;
     color: var(--white);
     text-align: justify;
-    padding: 25px 30px;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 16px;
+    padding: clamp(16px, 2vw, 28px);
+    background: var(--glass);
+    border-radius: var(--radius-lg);
     border-left: 4px solid var(--accent-gold);
     flex-shrink: 0;
-    max-height: 350px;
-    overflow: hidden;  
+    max-height: 360px;
+    overflow-y: auto;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 #choices-container {
-    margin-bottom: 20px;  
-    flex: 1;  
+    flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 12px;  
-    overflow: hidden; 
+    gap: var(--space-md);
+    overflow-y: auto;
+    padding-right: 6px;
 }
 
 .choice-option {
     display: flex;
     align-items: center;
-    padding: 24px 32px;
-    margin-bottom: 0;
+    gap: var(--space-md);
+    padding: clamp(18px, 2vw, 28px);
     border: 3px solid rgba(255, 255, 255, 0.2);
-    border-radius: 16px;
+    border-radius: var(--radius-lg);
     cursor: pointer;
     transition: var(--transition);
-    font-size: 60 px;
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(10px);
+    background: var(--glass);
+    backdrop-filter: blur(12px);
     position: relative;
     overflow: hidden;
-    flex-shrink: 0;
 }
 
 .choice-option::before {
@@ -765,9 +794,8 @@ body {
 }
 
 .choice-option input[type="radio"] {
-    margin-right: 24px;
-    width: 40px;
-    height: 40px;
+    width: clamp(22px, 2.5vw, 32px);
+    height: clamp(22px, 2.5vw, 32px);
     cursor: pointer;
     accent-color: var(--accent-blue);
     flex-shrink: 0;
@@ -775,11 +803,11 @@ body {
 
 .choice-option label {
     color: var(--white);
-    font-size: 34px;  
-    font-weight: 500;  
-    line-height: 1.3;
-    text-align: justify;  
-    flex: 1; 
+    font-size: clamp(1.1rem, 2.4vw, 2rem);
+    font-weight: 500;
+    line-height: 1.35;
+    text-align: justify;
+    flex: 1;
 }
 
 #question-footer {
@@ -787,19 +815,19 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 15px;
+    gap: var(--space-md);
     width: 100%;
     flex-shrink: 0;
 }
 
 #question-status {
     text-align: center;
-    font-size: 18px;
+    font-size: clamp(1rem, 1.2vw, 1.2rem);
     font-weight: bold;
     color: var(--accent-gold);
-    padding: 16px;
+    padding: clamp(12px, 1.5vw, 18px);
     background: rgba(255, 215, 0, 0.1);
-    border-radius: 12px;
+    border-radius: var(--radius-md);
     border: 2px solid rgba(255, 215, 0, 0.3);
     width: min(100%, 540px);
 }
@@ -808,33 +836,38 @@ body {
    CONTROLES INFERIORES
    =========================== */
 #controls {
-    padding: 20px 30px;
-    background: rgba(255, 255, 255, 0.05);
+    padding: clamp(16px, 2vw, 28px);
+    background: var(--glass);
     backdrop-filter: blur(10px);
-    border-top: 2px solid rgba(255, 215, 0, 0.3);
+    border-top: 2px solid var(--glass-border);
     display: flex;
     justify-content: flex-end;
-    gap: 16px;
+    gap: clamp(12px, 2vw, 20px);
     align-items: center;
     min-height: 70px;
     box-shadow: 0 -4px 20px var(--shadow);
     position: relative;
     z-index: 200;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    margin-top: clamp(16px, 2vh, 32px);
 }
 
 #board-controls,
 #panel-controls,
 #moderator-controls {
     display: none;
-    gap: 16px;
+    gap: var(--space-md);
     align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
 }
 
 button {
-    padding: 12px 28px;
+    padding: clamp(10px, 1.2vw, 16px) clamp(18px, 2.5vw, 32px);
     border: none;
-    border-radius: 12px;
-    font-size: 15px;
+    border-radius: var(--radius-md);
+    font-size: clamp(0.8rem, 1vw, 0.95rem);
     font-weight: 600;
     cursor: pointer;
     transition: var(--transition);
@@ -900,12 +933,12 @@ button:active {
 .checkbox-container {
     display: flex;
     align-items: center;
-    gap: 12px;
-    margin-right: 20px;
+    gap: var(--space-sm);
+    margin-right: clamp(8px, 2vw, 20px);
     cursor: pointer;
-    padding: 8px 16px;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 8px;
+    padding: clamp(6px, 0.9vw, 10px) clamp(12px, 1.6vw, 20px);
+    background: var(--glass);
+    border-radius: var(--radius-sm);
     transition: var(--transition);
 }
 
@@ -914,8 +947,8 @@ button:active {
 }
 
 .checkbox-container input[type="checkbox"] {
-    width: 20px;
-    height: 20px;
+    width: clamp(18px, 2vw, 22px);
+    height: clamp(18px, 2vw, 22px);
     cursor: pointer;
     accent-color: var(--accent-blue);
 }
@@ -929,24 +962,25 @@ button:active {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 6px;
+    gap: var(--space-xs);
     color: var(--white);
-    font-size: 14px;
-    margin-right: 20px;
+    font-size: clamp(0.8rem, 0.95vw, 0.95rem);
+    margin-right: clamp(10px, 2vw, 24px);
 }
 
 .team-count-control label {
     font-weight: 700;
     letter-spacing: 0.5px;
     text-transform: uppercase;
+    font-size: clamp(0.85rem, 1vw, 1rem);
 }
 
 .team-count-select-wrapper {
     position: relative;
-    min-width: 160px;
+    min-width: clamp(150px, 12vw, 200px);
     background: linear-gradient(135deg, rgba(30, 58, 95, 0.95) 0%, rgba(10, 25, 41, 0.95) 100%);
     border: 2px solid rgba(255, 215, 0, 0.6);
-    border-radius: 12px;
+    border-radius: var(--radius-md);
     box-shadow:
         0 8px 24px rgba(0, 0, 0, 0.45),
         0 0 40px rgba(33, 150, 243, 0.35),
@@ -970,9 +1004,9 @@ button:active {
     -webkit-appearance: none;
     -moz-appearance: none;
     width: 100%;
-    padding: 12px 48px 12px 18px;
+    padding: clamp(10px, 1.1vw, 14px) clamp(40px, 3vw, 52px) clamp(10px, 1.1vw, 14px) clamp(16px, 1.5vw, 24px);
     font-weight: 600;
-    font-size: 15px;
+    font-size: clamp(0.9rem, 1vw, 1rem);
     color: var(--white);
     background: transparent;
     border: none;
@@ -995,96 +1029,65 @@ button:active {
    RESPONSIVE
    =========================== */
 @media (max-width: 1400px) {
-    #question-text {
-        font-size: 56px;
-        max-height: 350px;
-    }
-    
-    .choice-option {
-        font-size: 38px;
+    #board {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     }
 
-    #timer {
-        font-size: 72px;  
+    #question-panel {
+        max-width: 95%;
     }
 }
 
 @media (max-width: 1200px) {
     #players-bar {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     }
 
-    .board-cell.header {
-        font-size: 18px;
+    #controls {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: var(--space-md);
+    }
+}
+
+@media (max-width: 992px) {
+    body {
+        padding: clamp(8px, 3vw, 18px);
     }
 
-    .board-cell.clue {
-        font-size: 26px;
+    #header {
+        border-radius: var(--radius-md);
     }
 
-    #timer {
-        font-size: 48px;
-        padding: 16px 28px;
+    #main-content {
+        padding: clamp(12px, 3vw, 20px) 0 clamp(20px, 4vh, 40px);
     }
 
-    #question-text {
-        font-size: 56px;  
-        max-height: 350px;
-    }
-    
-    .choice-option {
-        font-size: 32px;
+    #controls {
+        border-radius: var(--radius-md) var(--radius-md) 0 0;
     }
 }
 
 @media (max-width: 768px) {
     #players-bar {
-        grid-template-columns: 1fr 1fr;
-    }
-    
-    #header {
-        padding: 15px 20px;
-    }
-    
-    #main-content {
-        padding: 20px;
-    }
-    
-    .board-cell.header {
-        font-size: 14px;
-        padding: 10px;
-    }
-    
-    .board-cell.clue {
-        font-size: 20px;
-        min-height: 70px;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     }
 
-    #question-panel {
-        padding: 25px;
+    #controls {
+        flex-direction: column;
+        align-items: stretch;
     }
 
-    #question-text {
-        font-size: 30px;
-    }
-
-    .choice-option {
-        font-size: 16px;
-        padding: 16px 20px;
-    }
-
-    #question-status {
+    #controls button,
+    #controls .btn-info,
+    #controls .checkbox-container,
+    #controls .team-count-control {
         width: 100%;
+        text-align: center;
     }
 
-    #timer {
-        font-size: 42px;
-        padding: 14px 24px;
-    }
-
-    button {
-        padding: 10px 20px;
-        font-size: 13px;
+    #team-count-select {
+        width: 100%;
     }
 }
 
@@ -1144,24 +1147,12 @@ button:active {
    SOPORTE PARA IMÁGENES
    =========================== */
 
-/* Ajustar el panel de pregunta para que todo quepa sin scroll */
-#question-panel {
-    max-height: none;
-    height: auto;
-    overflow: visible;
-    padding: 30px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
+/* Ajustes para distribuir opciones e imágenes dentro del panel */
 #question-content-wrapper {
     display: flex;
-    gap: 20px;
+    gap: clamp(16px, 2vw, 28px);
     align-items: flex-start;
     width: 100%;
-    max-height: none;
-    overflow: visible;
 }
 
 /* Cuando hay imagen y respuestas visibles */
@@ -1175,7 +1166,7 @@ button:active {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10px;
+    gap: var(--space-sm);
 }
 
 #question-image-container.centered {
@@ -1187,17 +1178,18 @@ button:active {
 #question-image {
     width: 100%;
     height: auto;
-    max-height: 400px;
+    max-height: clamp(240px, 30vh, 420px);
     object-fit: contain;
-    border-radius: 12px;
+    border-radius: var(--radius-md);
     border: 3px solid var(--accent-gold);
     box-shadow: 0 8px 32px var(--shadow-strong);
     background: rgba(0, 0, 0, 0.3);
-    padding: 8px;
+    padding: var(--space-xs);
+    animation: imageZoomIn 0.4s ease;
 }
 
 #question-image.centered {
-    max-height: 350px;
+    max-height: clamp(260px, 40vh, 360px);
 }
 
 #choices-wrapper {
@@ -1210,66 +1202,14 @@ button:active {
     width: 100%;
 }
 
-/* Ajustar espaciado del texto de pregunta */
-#question-text {
-    font-size: 34px;
-    margin-bottom: 20px;
-    padding: 16px;
-}
-
-/* Ajustar opciones de respuesta para que sean más compactas */
-.choice-option {
-    padding: 14px 20px;
-    margin-bottom: 12px;
-    font-size: 18px;
-}
-
-/* Ajustar footer de pregunta */
-#question-footer {
-    margin-top: 20px;
-    gap: 15px;
-}
-
-#question-status {
-    padding: 12px;
-    font-size: 16px;
-}
-
-/* Ajustar temporizador para ser más compacto */
-#timer-container {
-    padding: 14px 24px;
-    gap: 8px;
-}
-
-#timer {
-    font-size: 48px;
-    padding: 12px 24px;
-    min-width: 140px;
-}
-
-.timer-label {
-    font-size: 14px;
-}
-
-/* Responsive para imágenes */
+/* Reglas responsivas para media */
 @media (max-width: 1400px) {
+    #question-content-wrapper {
+        gap: clamp(12px, 2vw, 20px);
+    }
+
     #question-image {
-        max-height: 250px;
-    }
-    
-    #question-image.centered {
-        max-height: 320px;
-    }
-    
-    #question-text {
-        font-size: 40px; /*tamaño de letra de las preguntas JC*/
-        margin-bottom: 20px;
-        padding: 16px;
-    }
-    
-    .choice-option {
-        font-size: 17px;
-        padding: 12px 18px;
+        max-height: clamp(220px, 26vh, 340px);
     }
 }
 
@@ -1277,65 +1217,28 @@ button:active {
     #question-content-wrapper.with-image-and-choices {
         flex-direction: column;
     }
-    
+
     #question-image-container {
         max-width: 100%;
         width: 100%;
     }
-    
+
     #question-image {
-        max-height: 280px;
-    }
-    
-    #question-text {
-        font-size: 36px;
-    }
-    
-    .choice-option {
-        font-size: 28px;
-        padding: 12px 16px;
-        margin-bottom: 10px;
-    }
-    
-    #timer {
-        font-size: 64px;
-        padding: 10px 20px;
+        max-height: clamp(200px, 30vh, 320px);
     }
 }
 
 @media (max-width: 768px) {
-    #question-panel {
-        padding: 20px;
-        gap: 15px;
+    #question-content-wrapper {
+        flex-direction: column;
     }
-    
+
     #question-image {
-        max-height: 200px;
+        max-height: clamp(180px, 35vh, 260px);
     }
-    
+
     #question-image.centered {
-        max-height: 250px;
-    }
-    
-    #question-text {
-        font-size: 34px;
-        margin-bottom: 15px;
-        padding: 12px;
-    }
-    
-    .choice-option {
-        font-size: 15px;
-        padding: 10px 14px;
-        margin-bottom: 8px;
-    }
-    
-    #timer {
-        font-size: 38px;
-        padding: 10px 18px;
-    }
-    
-    #timer-container {
-        padding: 12px 20px;
+        max-height: clamp(200px, 40vh, 280px);
     }
 }
 
