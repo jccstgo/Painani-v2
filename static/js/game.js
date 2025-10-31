@@ -555,10 +555,7 @@ socket.on('game_reset', (data) => {
         .catch(err => console.log('No hay carpeta de imágenes'));
 });
 
-socket.on('hide_answers_toggled', (data) => {
-    gameState.hideAnswers = data.hide;
-    updateControlsMode();
-});
+socket.on('hide_answers_toggled', (data) => { gameState.hideAnswers = data.hide; updateControlsMode(); if (gameState.currentQuestion) { showQuestionPanel(gameState.currentQuestion); } });
 
 socket.on('error', (data) => {
     console.error('❌ Error:', data);

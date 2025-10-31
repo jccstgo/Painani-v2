@@ -6,7 +6,7 @@ WebSockets para comunicación en tiempo real
 Con soporte para imágenes en preguntas
 """
 from flask import Flask, render_template, jsonify, request, send_from_directory
-from flask_socketio import SocketIO, emit
+from flask_socketio import SocketIO, emit, join_room
 import game_logic
 import os
 import tempfile
@@ -161,6 +161,12 @@ def handle_connect():
         'game_state': game.get_game_state()
     })
 
+@socketio.on('register_admin')
+def handle_register_admin():
+    """El cliente se registra como panel administrador para recibir datos completos"""
+    join_room('admins')
+    emit('admin_registered', {'ok': True})
+
 @socketio.on('open_question')
 def handle_open_question(data):
     """Abre una pregunta del tablero"""
@@ -179,6 +185,17 @@ def handle_open_question(data):
             question_data.pop('choices', None)
         
         emit('question_opened', question_data, broadcast=True)
+
+        # Enviar version completa al room de administradores
+        admin_payload = result.copy()
+        try:
+            ans_idx = int(admin_payload.get('answer', -1))
+        except Exception:
+            ans_idx = -1
+        choices = admin_payload.get('choices') or []
+        if isinstance(choices, list) and 0 <= ans_idx < len(choices):
+            admin_payload['answer_choice_text'] = choices[ans_idx]
+        socketio.emit('question_opened_admin', admin_payload, room='admins')
 
 @socketio.on('buzzer_press')
 def handle_buzzer(data):

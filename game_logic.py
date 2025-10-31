@@ -110,6 +110,10 @@ class GameState:
             "choices": clue["choices"],
             "answer": clue["answer"]
         }
+
+        # Incluir texto de respuesta si existe para soporte de preguntas sin opciones
+        if "answer_text" in clue and clue["answer_text"]:
+            self.current_question["answer_text"] = clue["answer_text"]
         
         # Agregar información de imagen si existe
         if "image" in clue and clue["image"]:
@@ -505,14 +509,19 @@ def load_from_csv_sampled(
             (raw_row.get("choice_d") or "").strip(),
         ]
 
-        ans_raw = str(raw_row.get("answer", "")).strip().lower()
+        original_ans = str(raw_row.get("answer", "")).strip()
+        ans_raw = original_ans.lower()
+        answer_text = ""
         if ans_raw in ("a", "b", "c", "d"):
             answer = "abcd".index(ans_raw)
         else:
             try:
                 answer = int(ans_raw)
             except Exception:
+                # Si no es indice ni letra, guardamos el texto como respuesta libre
                 answer = 0
+                if original_ans:
+                    answer_text = original_ans
 
         # Leer información de imagen
         image = (raw_row.get("image") or "").strip()
@@ -525,6 +534,7 @@ def load_from_csv_sampled(
             "question": question,
             "choices": choices,
             "answer": answer,
+            "answer_text": answer_text,
             "image": nombre_imagen if image.lower() == "si" else "",
         })
 
@@ -573,6 +583,10 @@ def load_from_csv_sampled(
                 clue_payload["unavailable"] = True
             if pick.get("reused"):
                 clue_payload["reused"] = True
+
+            # Propagar texto de respuesta libre si existe
+            if pick.get("answer_text"):
+                clue_payload["answer_text"] = pick.get("answer_text")
 
             clues.append(clue_payload)
 

@@ -6,7 +6,8 @@
     <title>Panel de Administración - Painani</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <style>
-        body { background: #0a0f1a; color: #fff; }
+        html, body { height: auto; }
+        body { background: #0a0f1a; color: #fff; overflow: auto !important; min-height: 100vh; }
         .admin-container { max-width: 900px; margin: 32px auto; padding: 24px; background: rgba(255,255,255,0.04); border-radius: 16px; border: 1px solid rgba(255,255,255,0.08); }
         .admin-header { display:flex; align-items:center; justify-content:space-between; margin-bottom: 16px; }
         .admin-title { font-size: 22px; font-weight: 700; letter-spacing: 0.5px; }
@@ -17,6 +18,16 @@
         .control label { font-weight: 600; }
         select { background: #0f1726; color: #fff; border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; padding: 10px 12px; font-size: 14px; }
         .status { margin-top: 16px; padding: 10px 12px; border-radius: 8px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08); font-size: 14px; }
+        .admin-answers { gap: 16px !important; }
+        .admin-answer-btn { font-size: 20px; padding: 14px 20px; border-radius: 12px; min-width: 64px; }
+        .admin-info { margin-top: 10px; padding: 12px; background: rgba(255,255,255,0.04); border: 1px dashed rgba(255,255,255,0.15); border-radius: 10px; font-size: 14px; }
+        .kv { opacity: 0.9; }
+        .scores-list { display: flex; flex-direction: column; gap: 10px; }
+        .score-row { display: flex; align-items: center; gap: 12px; background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 10px; }
+        .score-name { min-width: 110px; font-weight: 700; color: #9ecbff; }
+        .score-value { min-width: 80px; text-align: right; font-weight: 700; color: #FFD700; }
+        .score-controls { display:flex; gap: 8px; flex-wrap: wrap; }
+        .btn-small { padding: 8px 12px; border-radius: 10px; font-size: 14px; }
     </style>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎛️</text></svg>">
     <meta name="robots" content="noindex,nofollow">
@@ -29,6 +40,22 @@
         </div>
 
         <div class="admin-grid">
+            <div class="card">
+                <h3>Modo moderador</h3>
+                <div class="control" style="gap:12px; flex-wrap: wrap; align-items:center;">
+                    <label for="admin-hide-answers">Ocultar respuestas</label>
+                    <input type="checkbox" id="admin-hide-answers" />
+                </div>
+                <div class="status">Estado: <span id="hide-answers-status">Desactivado</span></div>
+            </div>
+
+            <div class="card">
+                <h3>Reinicio</h3>
+                <div class="control" style="gap:12px; flex-wrap: wrap; align-items:center;">
+                    <button id="btn-reset-exercise" class="btn-primary">⟳ Reiniciar ejercicio</button>
+                </div>
+                <div class="status" id="reset-status">Reinicia el tablero y todos los puntajes.</div>
+            </div>
             <div class="card">
                 <h3>Equipos</h3>
                 <div class="control">
@@ -49,6 +76,13 @@
             </div>
 
             <div class="card">
+                <h3>Puntajes</h3>
+                <div id="admin-scores" class="scores-list">
+                    <!-- Filas de puntajes -->
+                </div>
+            </div>
+
+            <div class="card">
                 <h3>Cargar preguntas</h3>
                 <div class="control" style="gap:8px; flex-wrap: wrap;">
                     <button id="btn-pick-file" class="btn-primary">Seleccionar archivo</button>
@@ -56,6 +90,38 @@
                     <input type="file" id="file-input" accept=".json,.csv" style="display:none" />
                 </div>
                 <div class="status" id="load-status">Listo para cargar archivos .csv o .json</div>
+            </div>
+
+            <div class="card" style="grid-column: 1 / -1;">
+                <h3>Tablero (abrir preguntas)</h3>
+                <div id="admin-board" style="display:grid; gap:8px; grid-auto-rows: 56px;
+                    border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 12px; background: rgba(255,255,255,0.03);
+                "></div>
+                <div class="status" style="margin-top:10px;">
+                    Haz clic en una casilla disponible para abrir la pregunta.
+                </div>
+            </div>
+
+            <div class="card" style="grid-column: 1 / -1;">
+                <h3>Control de pregunta</h3>
+                <div class="control" style="gap:12px; flex-wrap: wrap; margin-bottom: 8px;">
+                    <button id="btn-correct" class="btn-success">✔ Correcto</button>
+                    <button id="btn-incorrect" class="btn-danger">✖ Incorrecto</button>
+                    <button id="btn-cancel" class="btn-secondary">⎋ Cancelar</button>
+                </div>
+                <div class="control admin-answers" style="gap:16px; flex-wrap: wrap;">
+                    <div style="font-weight:600; min-width:120px;">Respuestas:</div>
+                    <button class="btn-primary admin-answer-btn" data-answer="0">a</button>
+                    <button class="btn-primary admin-answer-btn" data-answer="1">b</button>
+                    <button class="btn-primary admin-answer-btn" data-answer="2">c</button>
+                    <button class="btn-primary admin-answer-btn" data-answer="3">d</button>
+                </div>
+                <div class="status" id="admin-action-status" style="margin-top:10px;">Usa a/b/c/d o los botones para responder, Escape para cancelar.</div>
+                <div class="admin-info" id="admin-correct-box" style="display:none;">
+                    <div style="font-weight:700; color:#9ecbff; margin-bottom:6px;">Respuesta correcta (solo moderador)</div>
+                    <div class="kv">Letra: <span id="admin-correct-letter">-</span></div>
+                    <div class="kv">Contenido: <span id="admin-correct-text">-</span></div>
+                </div>
             </div>
         </div>
     </div>
