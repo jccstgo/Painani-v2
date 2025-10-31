@@ -100,10 +100,17 @@ def load_data():
             game.data = game_logic.load_data(file_path)
             game.images_folder = None
 
-        game.reset_game()
+        # Reiniciar solo el tablero (preservar puntajes)
+        game.reset_round()
 
-        # Notificar a todos los clientes
-        socketio.emit('game_reset', game.get_board_state())
+        # Notificar a todos los clientes (incluye bandera de preservación de puntajes)
+        board_payload = game.get_board_state()
+        try:
+            # Python 3.9+: merge dict
+            board_payload = {**board_payload, 'scores_preserved': True}
+        except Exception:
+            board_payload['scores_preserved'] = True
+        socketio.emit('game_reset', board_payload)
 
         display_name = original_name or os.path.basename(file_path)
         message = f"Datos cargados correctamente desde {display_name}"

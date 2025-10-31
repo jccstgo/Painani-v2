@@ -1,0 +1,21 @@
+socket.on('game_reset', (data) => {
+    console.log('🔄 Juego reiniciado');
+    renderBoard(data);
+    updateScores(data.scores);
+    closeQuestionPanel();
+    gameState.currentQuestion = null;
+    gameState.currentBuzzer = null;
+    gameState.selectedAnswer = -1;
+    gameState.triedPlayers.clear();
+    gameState.answerPending = false;
+    updateControlsMode();
+    setStatus('Juego reiniciado. Selecciona una casilla.', 'info');
+    clearChoiceSelection();
+    
+    // Reinicializar mosaico
+    fetch('/api/images-folder')
+        .then(r => r.json())
+        .then(result => {
+            if (result.images_folder) {
+                mosaic.initialize(result.images_folder);
+            }

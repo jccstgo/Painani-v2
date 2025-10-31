@@ -541,7 +541,7 @@ socket.on('game_reset', (data) => {
     gameState.triedPlayers.clear();
     gameState.answerPending = false;
     updateControlsMode();
-    setStatus('Juego reiniciado. Selecciona una casilla.', 'info');
+    if (data && data.scores_preserved) { setStatus('Nueva ronda cargada. Selecciona una casilla.', 'info'); } else { setStatus('Juego reiniciado. Selecciona una casilla.', 'info'); }
     clearChoiceSelection();
     
     // Reinicializar mosaico

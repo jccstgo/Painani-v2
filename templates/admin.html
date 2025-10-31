@@ -47,6 +47,16 @@
                     Jugador con turno: <span id="current-buzzer">-</span>
                 </div>
             </div>
+
+            <div class="card">
+                <h3>Cargar preguntas</h3>
+                <div class="control" style="gap:8px; flex-wrap: wrap;">
+                    <button id="btn-pick-file" class="btn-primary">Seleccionar archivo</button>
+                    <span id="selected-file" style="opacity:0.8">Ninguno</span>
+                    <input type="file" id="file-input" accept=".json,.csv" style="display:none" />
+                </div>
+                <div class="status" id="load-status">Listo para cargar archivos .csv o .json</div>
+            </div>
         </div>
     </div>
 
@@ -54,4 +64,3 @@
     <script src="{{ url_for('static', filename='js/admin.js') }}"></script>
     </body>
     </html>
-

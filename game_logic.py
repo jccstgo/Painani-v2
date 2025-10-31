@@ -83,6 +83,15 @@ class GameState:
         self.tried_players.clear()
         self.current_question = None
         self.timer_active = False
+
+    def reset_round(self):
+        """Reinicia solo el tablero/pregunta, preservando puntajes"""
+        self.used_questions.clear()
+        self.tile_status.clear()
+        self.current_buzzer = None
+        self.tried_players.clear()
+        self.current_question = None
+        self.timer_active = False
         
     def open_question(self, cat_idx: int, clue_idx: int) -> Dict:
         """Abre una pregunta del tablero"""

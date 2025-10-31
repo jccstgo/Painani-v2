@@ -12,6 +12,10 @@ const els = {
   hasQuestion: null,
   currentBuzzer: null,
   conn: null,
+  pickBtn: null,
+  fileInput: null,
+  selectedFile: null,
+  loadStatus: null,
 };
 
 function $(id) { return document.getElementById(id); }
@@ -22,6 +26,10 @@ function initElements() {
   els.hasQuestion = $('has-question');
   els.currentBuzzer = $('current-buzzer');
   els.conn = $('admin-conn');
+  els.pickBtn = $('btn-pick-file');
+  els.fileInput = $('file-input');
+  els.selectedFile = $('selected-file');
+  els.loadStatus = $('load-status');
 }
 
 function populateSelect(currentCount) {
@@ -57,6 +65,13 @@ function attachHandlers(socket) {
       socket.emit('set_team_count', { count: next });
     }
   });
+
+  if (els.pickBtn && els.fileInput) {
+    els.pickBtn.addEventListener('click', () => {
+      els.fileInput.click();
+    });
+    els.fileInput.addEventListener('change', handleFileSelection);
+  }
 }
 
 window.addEventListener('load', () => {
@@ -101,5 +116,60 @@ window.addEventListener('load', () => {
   socket.on('close_question', () => { adminState.hasQuestion = false; adminState.currentBuzzer = null; updateStatus(); });
   socket.on('buzzer_activated', (d) => { adminState.currentBuzzer = d?.player ?? null; updateStatus(); });
   socket.on('stop_timer', () => { /* keep */ });
+
+  socket.on('game_reset', (data) => {
+    // Refrescar conteo de equipos y estado tras cargar
+    if (Array.isArray(data?.scores)) {
+      adminState.playerCount = data.scores.length;
+      populateSelect(adminState.playerCount);
+    }
+    adminState.hasQuestion = false;
+    adminState.currentBuzzer = null;
+    updateStatus();
+    setLoadStatus('Datos cargados y juego reiniciado', 'ok');
+  });
 });
 
+function handleFileSelection(event) {
+  const input = event.target;
+  const file = input.files && input.files[0];
+  if (!file) return;
+
+  if (els.selectedFile) els.selectedFile.textContent = file.name;
+  setLoadStatus(`Cargando ${file.name}…`, 'info');
+
+  const formData = new FormData();
+  formData.append('file', file);
+
+  fetch('/api/load-data', { method: 'POST', body: formData })
+    .then(async (response) => {
+      const data = await response.json().catch(() => ({}));
+      if (response.ok && data.success) {
+        setLoadStatus(data.message || 'Datos cargados correctamente', 'ok');
+      } else {
+        const msg = data.error || 'Error al cargar archivo';
+        throw new Error(msg);
+      }
+    })
+    .catch((err) => {
+      setLoadStatus(err.message || 'Error al cargar archivo', 'error');
+    })
+    .finally(() => {
+      input.value = '';
+    });
+}
+
+function setLoadStatus(text, variant) {
+  if (!els.loadStatus) return;
+  els.loadStatus.textContent = text;
+  if (variant === 'ok') {
+    els.loadStatus.style.borderColor = 'rgba(76,175,80,0.6)';
+    els.loadStatus.style.color = '#90EE90';
+  } else if (variant === 'error') {
+    els.loadStatus.style.borderColor = 'rgba(244,67,54,0.7)';
+    els.loadStatus.style.color = '#FF7F7F';
+  } else {
+    els.loadStatus.style.borderColor = 'rgba(255,255,255,0.15)';
+    els.loadStatus.style.color = '#fff';
+  }
+}
