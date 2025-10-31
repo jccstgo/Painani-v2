@@ -136,6 +136,11 @@ def manual():
     """Página del manual de usuario"""
     return render_template('manual.html')
 
+@app.route('/admin')
+def admin():
+    """Panel de administracion (solo control)"""
+    return render_template('admin.html')
+
 # =====================
 # WEBSOCKET EVENTS
 # =====================

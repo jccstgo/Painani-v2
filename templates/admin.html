@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración - Painani</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        body { background: #0a0f1a; color: #fff; }
+        .admin-container { max-width: 900px; margin: 32px auto; padding: 24px; background: rgba(255,255,255,0.04); border-radius: 16px; border: 1px solid rgba(255,255,255,0.08); }
+        .admin-header { display:flex; align-items:center; justify-content:space-between; margin-bottom: 16px; }
+        .admin-title { font-size: 22px; font-weight: 700; letter-spacing: 0.5px; }
+        .admin-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .card { background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 16px; }
+        .card h3 { margin: 0 0 8px; font-size: 16px; font-weight: 700; color: #9ecbff; }
+        .control { display:flex; align-items:center; gap: 12px; }
+        .control label { font-weight: 600; }
+        select { background: #0f1726; color: #fff; border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; padding: 10px 12px; font-size: 14px; }
+        .status { margin-top: 16px; padding: 10px 12px; border-radius: 8px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08); font-size: 14px; }
+    </style>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎛️</text></svg>">
+    <meta name="robots" content="noindex,nofollow">
+</head>
+<body>
+    <div class="admin-container">
+        <div class="admin-header">
+            <div class="admin-title">Panel de Administración</div>
+            <div id="admin-conn" style="opacity:0.8; font-size:13px;">Conectando…</div>
+        </div>
+
+        <div class="admin-grid">
+            <div class="card">
+                <h3>Equipos</h3>
+                <div class="control">
+                    <label for="team-count-select">Número de equipos:</label>
+                    <select id="team-count-select"></select>
+                </div>
+                <div class="status">
+                    Actual: <span id="team-count-current">-</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Estado</h3>
+                <div class="status">
+                    Pregunta activa: <span id="has-question">-</span><br>
+                    Jugador con turno: <span id="current-buzzer">-</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+    </body>
+    </html>
+
