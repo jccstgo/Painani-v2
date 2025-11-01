@@ -371,7 +371,8 @@ const sounds = {
     buzz: new Audio('/sounds/boton_presionado2.wav'),
     correct: new Audio('/sounds/aplausos.wav'),
     incorrect: new Audio('/sounds/incorrecto.wav'),
-    countdown: new Audio('/sounds/contestando.wav')
+    countdown: new Audio('/sounds/contestando.wav'),
+    timeup: new Audio('/sounds/fin.mp3')
 };
 
 // ===========================
@@ -453,6 +454,7 @@ socket.on('time_up', (data) => {
     stopTimer();
     enableChoices(false);
     setStatus('Tiempo agotado. Esperando decisión del moderador.', 'info');
+    playSound('timeup');
 });
 
 socket.on('answer_result', (data) => {

@@ -1,52 +1,447 @@
-/* Estilos específicos del panel de administración */
+/* ===========================
+   PANEL DE ADMINISTRACIÓN
+   Optimizado para tablets 10-11"
+   =========================== */
 
-/* Layout base del panel */
-html, body { height: auto; }
-body { background: #0a0f1a; color: #fff; overflow: auto !important; min-height: 100vh; }
-.admin-container { max-width: 900px; margin: 32px auto; padding: 24px; background: rgba(255,255,255,0.04); border-radius: 16px; border: 1px solid rgba(255,255,255,0.08); }
-.admin-header { display:flex; align-items:center; justify-content:space-between; margin-bottom: 16px; }
-.admin-conn { opacity: 0.8; font-size: 13px; }
-.admin-title { font-size: 22px; font-weight: 700; letter-spacing: 0.5px; }
-.admin-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-.card { background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 16px; }
-.card h3 { margin: 0 0 8px; font-size: 16px; font-weight: 700; color: #9ecbff; }
-.control { display:flex; align-items:center; gap: 12px; }
-.control.wrap { flex-wrap: wrap; align-items: center; }
+/* Layout base */
+html, body { 
+    height: 100vh; 
+    margin: 0; 
+    padding: 0;
+    overflow: hidden;
+}
+
+body { 
+    background: linear-gradient(135deg, #0a1929 0%, #1e3a5f 100%);
+    color: #fff; 
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.admin-container { 
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+    gap: 12px;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* Header compacto */
+.admin-header { 
+    background: linear-gradient(135deg, rgba(255,215,0,0.15) 0%, rgba(33,150,243,0.15) 100%);
+    border: 2px solid rgba(255,215,0,0.4);
+    border-radius: 12px;
+    padding: 12px 16px;
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between;
+    flex-shrink: 0;
+}
+
+.admin-conn { 
+    font-size: 14px;
+    color: #4CAF50;
+    font-weight: 600;
+}
+
+.admin-title { 
+    font-size: 20px; 
+    font-weight: 700; 
+    letter-spacing: 0.5px;
+    color: #FFD700;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+/* Grid principal - distribución optimizada */
+.admin-grid { 
+    flex: 1;
+    display: grid; 
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 4px;
+}
+
+/* Scrollbar personalizada */
+.admin-grid::-webkit-scrollbar {
+    width: 8px;
+}
+
+.admin-grid::-webkit-scrollbar-track {
+    background: rgba(255,255,255,0.05);
+    border-radius: 4px;
+}
+
+.admin-grid::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #FFD700 0%, #FFA000 100%);
+    border-radius: 4px;
+}
+
+/* Cards con mejor contraste */
+.card { 
+    background: linear-gradient(135deg, rgba(30,58,95,0.4) 0%, rgba(10,25,41,0.4) 100%);
+    border: 2px solid rgba(255,255,255,0.15);
+    border-radius: 12px; 
+    padding: 14px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    border-color: rgba(255,215,0,0.4);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.4);
+}
+
+.card h3 { 
+    margin: 0 0 10px; 
+    font-size: 16px; 
+    font-weight: 700; 
+    color: #FFD700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid rgba(255,215,0,0.3);
+    padding-bottom: 6px;
+}
+
+/* Controles */
+.control { 
+    display: flex; 
+    align-items: center; 
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.control.wrap { 
+    flex-wrap: wrap;
+}
+
+.control label { 
+    font-weight: 600;
+    font-size: 14px;
+    color: #9ecbff;
+}
+
+/* Inputs y selects mejorados */
+select { 
+    background: linear-gradient(135deg, #1e3a5f 0%, #0a1929 100%);
+    color: #fff; 
+    border: 2px solid rgba(255,215,0,0.4);
+    border-radius: 8px; 
+    padding: 10px 12px; 
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+select:hover {
+    border-color: rgba(255,215,0,0.7);
+    box-shadow: 0 0 8px rgba(255,215,0,0.3);
+}
+
+select:focus {
+    outline: none;
+    border-color: #FFD700;
+    box-shadow: 0 0 12px rgba(255,215,0,0.5);
+}
+
+/* Input file mejorado */
+input[type="file"] {
+    display: none;
+}
+
+input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: #FFD700;
+}
+
+/* Status boxes más visibles */
+.status { 
+    margin-top: 8px; 
+    padding: 10px 12px; 
+    border-radius: 8px; 
+    background: rgba(0,0,0,0.3);
+    border: 1px solid rgba(255,255,255,0.15);
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.muted { 
+    opacity: 0.7;
+    font-size: 13px;
+}
+
+/* Utilidades */
 .gap-8 { gap: 8px !important; }
 .mb-8 { margin-bottom: 8px !important; }
 .mt-10 { margin-top: 10px !important; }
 .grid-span-full { grid-column: 1 / -1; }
 .hidden { display: none !important; }
-.control label { font-weight: 600; }
-select { background: #0f1726; color: #fff; border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; padding: 10px 12px; font-size: 14px; }
-.status { margin-top: 16px; padding: 10px 12px; border-radius: 8px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08); font-size: 14px; }
-.muted { opacity: 0.8; }
 
-/* Contenedor del tablero de administración */
+/* Tablero de administración compacto */
 .admin-board-grid {
-  display: grid;
-  gap: 8px;
-  grid-auto-rows: 56px;
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 12px;
-  padding: 12px;
-  background: rgba(255,255,255,0.03);
+    display: grid;
+    gap: 6px;
+    grid-auto-rows: 48px;
+    border: 2px solid rgba(255,215,0,0.3);
+    border-radius: 12px;
+    padding: 10px;
+    background: rgba(0,0,0,0.3);
 }
 
-/* Controles de respuestas (más grandes para evitar clics accidentales) */
-.admin-answers { gap: 16px !important; flex-wrap: wrap; }
-.admin-answer-btn { font-size: 20px; padding: 14px 20px; border-radius: 12px; min-width: 64px; }
+/* Botones de respuesta MUY VISIBLES */
+.admin-answers { 
+    display: flex;
+    gap: 12px !important;
+    flex-wrap: wrap;
+    justify-content: center;
+}
 
-/* Bloque de información de respuesta correcta (solo admin) */
-.admin-info { margin-top: 10px; padding: 12px; background: rgba(255,255,255,0.04); border: 1px dashed rgba(255,255,255,0.15); border-radius: 10px; font-size: 14px; }
-.kv { opacity: 0.9; }
-.info-title { font-weight: 700; color: #9ecbff; margin-bottom: 6px; }
-.answer-label { font-weight: 600; min-width: 120px; }
+.admin-answer-btn { 
+    font-size: 24px !important;
+    font-weight: 700 !important;
+    padding: 16px 24px !important;
+    border-radius: 12px;
+    min-width: 70px;
+    border: 3px solid rgba(255,215,0,0.5) !important;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.2s ease;
+}
 
-/* Lista de puntajes */
-.scores-list { display: flex; flex-direction: column; gap: 10px; }
-.score-row { display: flex; align-items: center; gap: 12px; background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 10px; }
-.score-name { min-width: 110px; font-weight: 700; color: #9ecbff; }
-.score-value { min-width: 80px; text-align: right; font-weight: 700; color: #FFD700; }
-.score-controls { display:flex; gap: 8px; flex-wrap: wrap; }
-.btn-small { padding: 8px 12px; border-radius: 10px; font-size: 14px; }
+.admin-answer-btn:hover:not(:disabled) {
+    transform: scale(1.1);
+    border-color: #FFD700 !important;
+    box-shadow: 0 0 20px rgba(255,215,0,0.6) !important;
+}
+
+.admin-answer-btn:active:not(:disabled) {
+    transform: scale(0.95);
+}
+
+/* RESPUESTA CORRECTA - MÁXIMA VISIBILIDAD */
+.admin-info { 
+    margin-top: 12px; 
+    padding: 16px;
+    background: linear-gradient(135deg, rgba(76,175,80,0.3) 0%, rgba(56,142,60,0.3) 100%);
+    border: 3px solid #4CAF50 !important;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(76,175,80,0.4);
+}
+
+.info-title { 
+    font-weight: 700;
+    font-size: 16px;
+    color: #FFD700;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-align: center;
+}
+
+.kv { 
+    font-size: 15px;
+    line-height: 1.6;
+    margin: 6px 0;
+    padding: 8px;
+    background: rgba(0,0,0,0.3);
+    border-radius: 6px;
+    border-left: 4px solid #FFD700;
+}
+
+#admin-correct-letter {
+    font-size: 28px !important;
+    font-weight: 900 !important;
+    color: #FFD700 !important;
+    text-transform: uppercase;
+    background: rgba(255,215,0,0.2);
+    padding: 4px 12px;
+    border-radius: 6px;
+    display: inline-block;
+    margin-left: 8px;
+}
+
+#admin-correct-text {
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    color: #4CAF50 !important;
+    display: block;
+    margin-top: 8px;
+    padding: 8px;
+    background: rgba(76,175,80,0.2);
+    border-radius: 6px;
+    border-left: 4px solid #4CAF50;
+}
+
+.answer-label { 
+    font-weight: 700;
+    min-width: 100px;
+    font-size: 14px;
+    color: #9ecbff;
+}
+
+/* Lista de puntajes mejorada */
+.scores-list { 
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-height: 300px;
+    overflow-y: auto;
+    padding-right: 4px;
+}
+
+.scores-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.scores-list::-webkit-scrollbar-thumb {
+    background: rgba(255,215,0,0.5);
+    border-radius: 3px;
+}
+
+.score-row { 
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(0,0,0,0.3);
+    border: 2px solid rgba(255,255,255,0.15);
+    border-radius: 10px;
+    padding: 10px;
+    transition: all 0.2s ease;
+}
+
+.score-row:hover {
+    border-color: rgba(255,215,0,0.5);
+    background: rgba(255,215,0,0.05);
+}
+
+.score-name { 
+    min-width: 90px;
+    font-weight: 700;
+    color: #9ecbff;
+    font-size: 14px;
+}
+
+.score-value { 
+    min-width: 70px;
+    text-align: center;
+    font-weight: 700;
+    color: #FFD700;
+    font-size: 18px;
+    background: rgba(255,215,0,0.1);
+    padding: 4px 8px;
+    border-radius: 6px;
+}
+
+.score-controls { 
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    flex: 1;
+    justify-content: flex-end;
+}
+
+.btn-small { 
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-small:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+/* Botones generales mejorados */
+button {
+    border: 2px solid transparent;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #2196F3 0%, #64B5F6 100%);
+    color: white;
+    border-color: rgba(33,150,243,0.5);
+}
+
+.btn-primary:hover:not(:disabled) {
+    border-color: #2196F3;
+    box-shadow: 0 0 15px rgba(33,150,243,0.5);
+}
+
+.btn-success {
+    background: linear-gradient(135deg, #4CAF50 0%, #66BB6A 100%);
+    color: white;
+    border-color: rgba(76,175,80,0.5);
+}
+
+.btn-success:hover:not(:disabled) {
+    border-color: #4CAF50;
+    box-shadow: 0 0 15px rgba(76,175,80,0.5);
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, #F44336 0%, #E57373 100%);
+    color: white;
+    border-color: rgba(244,67,54,0.5);
+}
+
+.btn-danger:hover:not(:disabled) {
+    border-color: #F44336;
+    box-shadow: 0 0 15px rgba(244,67,54,0.5);
+}
+
+.btn-secondary {
+    background: linear-gradient(135deg, #757575 0%, #9E9E9E 100%);
+    color: white;
+    border-color: rgba(117,117,117,0.5);
+}
+
+.btn-secondary:hover:not(:disabled) {
+    border-color: #757575;
+    box-shadow: 0 0 15px rgba(117,117,117,0.5);
+}
+
+/* Responsive para tablets más pequeñas */
+@media (max-width: 900px) and (min-width: 768px) {
+    .admin-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .grid-span-full {
+        grid-column: 1;
+    }
+}
+
+/* Animaciones sutiles */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card {
+    animation: fadeIn 0.3s ease;
+}
