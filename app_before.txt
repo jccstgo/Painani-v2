@@ -16,14 +16,8 @@ from pathlib import Path
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret_2025'
-# Reducir ruido en consola y evitar trazas de eventlet (usar modo threading)
-socketio = SocketIO(
-    app,
-    cors_allowed_origins="*",
-    async_mode='threading',
-    logger=False,
-    engineio_logger=False
-)
+# Reducir ruido en consola
+socketio = SocketIO(app, cors_allowed_origins="*", logger=False, engineio_logger=False)
 logging.getLogger('werkzeug').setLevel(logging.WARNING)
 app.logger.setLevel(logging.WARNING)
 
@@ -408,13 +402,23 @@ if __name__ == '__main__':
     
     
     print("\n" + "="*50)
-    print("Painani del Conocimiento - Servidor Iniciado")
+    print("🎮 Painani del Conocimiento - Servidor Iniciado")
     print("="*50)
-    ip_local = _get_local_ip()
-    print("Jugador (local):   http://localhost:5000")
-    print("Jugador (LAN):     http://{}:5000".format(ip_local))
-    print("Moderador (local): http://localhost:5000/admin")
-    print("Moderador (LAN):   http://{}:5000/admin".format(ip_local))
-    print("Controles: 1-9/0 timbres, A-D respuestas, Enter confirmar, Esc cancelar")
+    print("📍 URL: http://localhost:5000")
+    print("📍 Red local: http://[tu-ip]:5000")
+    print("\n🎯 Controles:")
+    print("   - Teclado 1-9: Buzzers de equipos 1 al 9")
+    print("   - Tecla 0: Buzzer del equipo 10")
+    print("   - Teclado A-D: Seleccionar respuestas")
+    print("   - Enter: Confirmar respuesta")
+    print("   - Escape: Cancelar")
+    print("\n📸 Soporte de imágenes:")
+    print("   - Las imágenes deben estar en data/<nombre_csv>/")
+    print("   - Ejemplo: data/preguntas/imagen1.jpg")
+    print("\n⚡ WebSockets activos para tiempo real")
     print("="*50 + "\n")
-    socketio.run(app, host='0.0.0.0', port=5000, debug=False)
+    
+    # Iniciar servidor con eventlet para mejor rendimiento
+    socketio.run(app, host='0.0.0.0', port=5000, debug=True)
+
+

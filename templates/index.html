@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -112,40 +112,7 @@
         </main>
 
         <!-- CONTROLES INFERIORES -->
-        <footer id="controls">
-            <!-- Modo Tablero -->
-            <div id="board-controls">
-                <button class="btn-warning" onclick="toggleQuickAdjust()">⚙️ Ajustar Puntajes</button>
-                <div class="team-count-control">
-                    <label for="team-count-select">👥 Equipos</label>
-                    <div class="team-count-select-wrapper">
-                        <select id="team-count-select"></select>
-                    </div>
-                </div>
-                <label class="checkbox-container">
-                    <input type="checkbox" id="hide-answers" onchange="toggleHideAnswers()">
-                    <span>🔒 Ocultar respuestas</span>
-                </label>
-                <button class="btn-primary" onclick="loadData()">📂 Cargar</button>
-                <input type="file" id="file-input" accept=".json,.csv" style="display: none;" />
-                <button class="btn-primary" onclick="resetGame()">🔄 Reiniciar</button>
-                <a href="/manual" target="_blank" class="btn-info" style="display: inline-block; padding: 12px 28px; border-radius: 12px; text-decoration: none; background: linear-gradient(135deg, #9C27B0 0%, #BA68C8 100%); color: white; font-size: 15px; font-weight: 600;">📖 Manual</a>
-                <button class="btn-secondary" onclick="confirmExit()">❌ Salir</button>
-            </div>
-
-            <!-- Modo Pregunta (respuestas visibles) -->
-            <div id="panel-controls" style="display: none;">
-                <button class="btn-success" onclick="submitAnswer()">✓ Responder</button>
-                <button class="btn-secondary" onclick="cancelQuestion()">✕ Cancelar</button>
-            </div>
-
-            <!-- Modo Moderador (respuestas ocultas) -->
-            <div id="moderator-controls" style="display: none;">
-                <button class="btn-success" onclick="moderatorCorrect()">✓ Correcto</button>
-                <button class="btn-danger" onclick="moderatorIncorrect()">✕ Incorrecto</button>
-                <button class="btn-secondary" onclick="cancelQuestion()">↩ Cancelar</button>
-            </div>
-        </footer>
+        
     </div>
 
     <!-- Socket.IO -->

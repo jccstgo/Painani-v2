@@ -1,4 +1,4 @@
-// ===========================
+﻿// ===========================
 // PAINANI WEB - CLIENTE
 // ===========================
 
@@ -47,16 +47,11 @@ const elements = {
     teamCountSelect: document.getElementById('team-count-select')
 };
 
-if (elements.fileInput) {
-    elements.fileInput.addEventListener('change', handleFileSelection);
-}
+
 
 let suppressTeamCountChange = false;
 
-if (elements.teamCountSelect) {
-    populateTeamCountSelect();
-    elements.teamCountSelect.addEventListener('change', handleTeamCountChange);
-}
+
 
 const mosaic = (() => {
     const state = {
@@ -1004,106 +999,15 @@ function cancelQuestion() {
     stopAllSounds();
 }
 
-function toggleHideAnswers() {
-    gameState.hideAnswers = elements.hideAnswersCheckbox.checked;
-    socket.emit('toggle_hide_answers', { hide: gameState.hideAnswers });
-    
-    // Si hay una pregunta abierta, actualizar vista
-    if (gameState.currentQuestion) {
-        showQuestionPanel(gameState.currentQuestion);
-    }
-}
 
-function resetGame() {
-    if (confirm('¿Deseas reiniciar el juego? Se perderán todos los puntajes.')) {
-        fetch('/api/reset', { method: 'POST' })
-            .then(r => r.json())
-            .then(data => {
-                console.log('🔄 Juego reiniciado');
-            })
-            .catch(err => console.error('Error al reiniciar:', err));
-    }
-}
 
-function handleFileSelection(event) {
-    const input = event.target;
-    const file = input.files && input.files[0];
 
-    if (!file) {
-        return;
-    }
 
-    console.log('📁 Archivo seleccionado:', file.name);
-    setStatus(`Cargando ${file.name}...`, 'info');
 
-    const formData = new FormData();
-    formData.append('file', file);
 
-    fetch('/api/load-data', {
-        method: 'POST',
-        body: formData
-    })
-        .then(async (response) => {
-            const data = await response.json().catch(() => ({}));
 
-            if (response.ok && data.success) {
-                setStatus(data.message || 'Datos cargados correctamente', 'correct');
-                const fileName = file.name.replace(/\.[^/.]+$/, '');
-                mosaic.initialize(fileName);
-            } else {
-                const errorMessage = data.error || 'Error al cargar archivo';
-                throw new Error(errorMessage);
-            }
-        })
-        .catch((err) => {
-            console.error('Error al cargar archivo:', err);
-            setStatus(err.message || 'Error al cargar archivo', 'incorrect');
-        })
-        .finally(() => {
-            input.value = '';
-        });
-}
 
-function loadData() {
-    if (elements.fileInput) {
-        elements.fileInput.click();
-        return;
-    }
 
-    // Compatibilidad con versiones anteriores
-    const path = prompt('Ruta del archivo (JSON o CSV):', 'data/questions.json');
-    if (!path) return;
-
-    const type = path.toLowerCase().endsWith('.csv') ? 'csv' : 'json';
-
-    fetch('/api/load-data', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ type, path })
-    })
-        .then(r => r.json())
-        .then(data => {
-            if (data.success) {
-                setStatus(data.message, 'correct');
-            } else {
-                setStatus(data.error || 'Error al cargar', 'incorrect');
-            }
-        })
-        .catch(err => {
-            console.error('Error:', err);
-            setStatus('Error al cargar archivo', 'incorrect');
-        });
-}
-
-function confirmExit() {
-    if (confirm('¿Deseas salir del juego?')) {
-        window.close();
-        // Si no puede cerrar la ventana, mostrar mensaje
-        setTimeout(() => {
-            setStatus('Cierra esta pestaña para salir', 'info');
-        }, 100);
-    }
-}
 
 // ===========================
 // TEMPORIZADOR
@@ -1190,34 +1094,11 @@ function stopTimer() {
     stopSound('countdown');
 }
 
-function populateTeamCountSelect() {
-    if (!elements.teamCountSelect) return;
-    elements.teamCountSelect.innerHTML = '';
 
-    for (let i = 2; i <= 10; i += 1) {
-        const option = document.createElement('option');
-        option.value = String(i);
-        option.textContent = `${i} equipos`;
-        elements.teamCountSelect.appendChild(option);
-    }
 
-    setTeamCountSelectValue(gameState.playerCount);
-}
 
-function setTeamCountSelectValue(count) {
-    if (!elements.teamCountSelect) return;
-    suppressTeamCountChange = true;
-    elements.teamCountSelect.value = String(count);
-    suppressTeamCountChange = false;
-}
 
-function handleTeamCountChange(event) {
-    if (suppressTeamCountChange) return;
-    const value = parseInt(event.target.value, 10);
-    if (Number.isNaN(value) || value === gameState.playerCount) return;
 
-    socket.emit('set_team_count', { count: value });
-}
 
 function renderPlayers(scores = []) {
     if (!elements.playersBar || !elements.quickAdjustPlayers) return;
@@ -1225,7 +1106,6 @@ function renderPlayers(scores = []) {
     const desiredCount = scores.length || gameState.playerCount || 5;
     const count = Math.min(10, Math.max(2, desiredCount));
     gameState.playerCount = count;
-    setTeamCountSelectValue(count);
 
     elements.playersBar.innerHTML = '';
     elements.quickAdjustPlayers.innerHTML = '';
@@ -1700,24 +1580,21 @@ function flashStatus(variant, immediateText, afterText) {
 function updateControlsMode() {
     console.log('🎛️ Actualizando controles. Pregunta activa:', gameState.currentQuestion !== null);
     
-    // Ocultar todos primero
-    elements.boardControls.style.display = 'none';
-    elements.panelControls.style.display = 'none';
-    elements.moderatorControls.style.display = 'none';
+    // Ocultar todos primero (con chequeos)\r\n    if (elements.boardControls) elements.boardControls.style.display = 'none';\r\n    if (elements.panelControls) elements.panelControls.style.display = 'none';\r\n    if (elements.moderatorControls) elements.moderatorControls.style.display = 'none';
     
     if (gameState.currentQuestion) {
         // Hay pregunta activa
         if (gameState.hideAnswers) {
             console.log('   → Modo: Moderador (respuestas ocultas)');
-            elements.moderatorControls.style.display = 'flex';
+            if (elements.moderatorControls) elements.moderatorControls.style.display = 'flex';
         } else {
             console.log('   → Modo: Panel (respuestas visibles)');
-            elements.panelControls.style.display = 'flex';
+            if (elements.panelControls) elements.panelControls.style.display = 'flex';
         }
     } else {
         // Tablero visible
         console.log('   → Modo: Tablero');
-        elements.boardControls.style.display = 'flex';
+        if (elements.boardControls) elements.boardControls.style.display = 'flex';
     }
 }
 
