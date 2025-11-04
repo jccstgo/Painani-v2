@@ -476,7 +476,11 @@ def _append_used_rows(used_csv_path: str, rows: List[dict]):
                     "image": row.get("image", ""),
                 })
     except Exception as e:
-        print(f"Error guardando en usadas.csv: {e}")
+        # Usar repr() para evitar problemas de encoding en la consola de Windows
+        try:
+            print(f"Error guardando en usadas.csv: {repr(e)}")
+        except:
+            print("Error guardando en usadas.csv (error no imprimible)")
 
 
 def load_from_csv_sampled(

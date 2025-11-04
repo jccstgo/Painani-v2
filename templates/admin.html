@@ -12,91 +12,143 @@
 </head>
 <body>
     <div class="admin-container">
-        <div class="admin-header">
-            <div class="admin-title">Panel de Administración</div>
-            <div id="admin-conn" class="admin-conn">Conectando…</div>
+        <!-- Tabs como pestañas reales -->
+        <div class="admin-tabs-container">
+            <div class="admin-tabs">
+                <button class="tab-button active" data-tab="tab-game">
+                    <span class="tab-icon">🎮</span>
+                    <span class="tab-label">Juego</span>
+                </button>
+                <button class="tab-button" data-tab="tab-teams">
+                    <span class="tab-icon">👥</span>
+                    <span class="tab-label">Equipos y Puntajes</span>
+                </button>
+                <button class="tab-button" data-tab="tab-config">
+                    <span class="tab-icon">⚙️</span>
+                    <span class="tab-label">Configuración</span>
+                </button>
+            </div>
+            <div class="admin-status">
+                <div id="admin-conn" class="admin-conn">Conectando…</div>
+            </div>
         </div>
 
-        <div class="admin-grid">
-            <div class="card">
-                <h3>Modo moderador</h3>
-                <div class="control wrap">
-                    <label for="admin-hide-answers">Ocultar respuestas</label>
-                    <input type="checkbox" id="admin-hide-answers" />
+        <!-- Tab 1: Tablero y Control de Pregunta -->
+        <div id="tab-game" class="tab-content active">
+            <div class="admin-grid-game">
+                <!-- Panel superior: Tablero (ocupa todo el ancho) -->
+                <div class="card card-board">
+                    <h3>Tablero (abrir preguntas)</h3>
+                    <div id="admin-board" class="admin-board-grid"></div>
+                    <div class="status mt-10">
+                        Haz clic en una casilla disponible para abrir la pregunta.
+                    </div>
                 </div>
-                <div class="status">Estado: <span id="hide-answers-status">Desactivado</span></div>
-            </div>
 
-            <div class="card">
-                <h3>Reinicio</h3>
-                <div class="control wrap">
-                    <button id="btn-reset-exercise" class="btn-primary">⟳ Reiniciar ejercicio</button>
-                </div>
-                <div class="status" id="reset-status">Reinicia el tablero y todos los puntajes.</div>
-            </div>
-            <div class="card">
-                <h3>Equipos</h3>
-                <div class="control">
-                    <label for="team-count-select">Número de equipos:</label>
-                    <select id="team-count-select"></select>
-                </div>
-                <div class="status">
-                    Actual: <span id="team-count-current">-</span>
-                </div>
-            </div>
+                <!-- Panel inferior izquierdo: Control de pregunta -->
+                <div class="card card-question-control">
+                    <h3>Control de pregunta</h3>
 
-            <div class="card">
-                <h3>Estado</h3>
-                <div class="status">
-                    Pregunta activa: <span id="has-question">-</span><br>
-                    Jugador con turno: <span id="current-buzzer">-</span>
+                    <!-- Estado actual -->
+                    <div class="status mb-8">
+                        Pregunta activa: <span id="has-question">-</span> |
+                        Jugador con turno: <span id="current-buzzer">-</span>
+                    </div>
+
+                    <!-- Modo moderador -->
+                    <div class="control wrap mb-8">
+                        <label for="admin-hide-answers">Ocultar respuestas</label>
+                        <input type="checkbox" id="admin-hide-answers" />
+                        <span class="status-inline">Estado: <span id="hide-answers-status">Desactivado</span></span>
+                    </div>
+
+                    <!-- Botones de control -->
+                    <div class="control wrap mb-8">
+                        <button id="btn-correct" class="btn-success">✔ Correcto</button>
+                        <button id="btn-incorrect" class="btn-danger">✖ Incorrecto</button>
+                        <button id="btn-cancel" class="btn-secondary">⎋ Cancelar</button>
+                    </div>
+
+                    <!-- Botones de respuesta -->
+                    <div class="control admin-answers mb-8">
+                        <div class="answer-label">Respuestas:</div>
+                        <button class="btn-primary admin-answer-btn" data-answer="0">a</button>
+                        <button class="btn-primary admin-answer-btn" data-answer="1">b</button>
+                        <button class="btn-primary admin-answer-btn" data-answer="2">c</button>
+                        <button class="btn-primary admin-answer-btn" data-answer="3">d</button>
+                    </div>
+
+                    <div class="status" id="admin-action-status">Usa a/b/c/d o los botones para responder, Escape para cancelar.</div>
+                </div>
+
+                <!-- Panel inferior derecho: Respuesta correcta -->
+                <div class="card card-correct-answer">
+                    <h3>Respuesta correcta (solo moderador)</h3>
+                    <div class="admin-info-content hidden" id="admin-correct-box">
+                        <div class="kv">Letra: <span id="admin-correct-letter">-</span></div>
+                        <div class="kv">Contenido: <span id="admin-correct-text">-</span></div>
+                    </div>
+                    <div class="admin-info-placeholder" id="admin-correct-placeholder">
+                        No hay pregunta activa
+                    </div>
                 </div>
             </div>
+        </div>
 
-            <div class="card">
-                <h3>Puntajes</h3>
-                <div id="admin-scores" class="scores-list">
-                    <!-- Filas de puntajes -->
+        <!-- Tab 2: Equipos y Puntajes -->
+        <div id="tab-teams" class="tab-content">
+            <div class="admin-grid-teams">
+                <div class="card card-teams-selector">
+                    <h3>Equipos</h3>
+                    <div class="control">
+                        <label for="team-count-select">Número de equipos:</label>
+                        <select id="team-count-select"></select>
+                    </div>
+                    <div class="status">
+                        Actual: <span id="team-count-current">-</span>
+                    </div>
+                </div>
+
+                <div class="card card-scores">
+                    <h3>Puntajes</h3>
+                    <div id="admin-scores" class="scores-list">
+                        <!-- Filas de puntajes -->
+                    </div>
                 </div>
             </div>
+        </div>
 
-            <div class="card">
-                <h3>Cargar preguntas</h3>
-                <div class="control wrap gap-8">
-                    <button id="btn-pick-file" class="btn-primary">Seleccionar archivo</button>
-                    <span id="selected-file" class="muted">Ninguno</span>
-                    <input type="file" id="file-input" accept=".json,.csv" class="hidden" />
+        <!-- Tab 3: Configuración -->
+        <div id="tab-config" class="tab-content">
+            <div class="admin-grid-config">
+                <!-- Panel superior izquierdo: Cargar nuevo banco -->
+                <div class="card card-config-load">
+                    <h3>Cargar nuevo banco de preguntas</h3>
+                    <div class="control wrap gap-8 mb-8">
+                        <button id="btn-pick-file" class="btn-primary">Seleccionar archivo</button>
+                        <span id="selected-file" class="muted">Ninguno</span>
+                        <input type="file" id="file-input" accept=".json,.csv" class="hidden" />
+                    </div>
+                    <div class="status" id="load-status">Listo para cargar archivos .csv o .json</div>
                 </div>
-                <div class="status" id="load-status">Listo para cargar archivos .csv o .json</div>
-            </div>
 
-            <div class="card grid-span-full">
-                <h3>Tablero (abrir preguntas)</h3>
-                <div id="admin-board" class="admin-board-grid"></div>
-                <div class="status mt-10">
-                    Haz clic en una casilla disponible para abrir la pregunta.
+                <!-- Panel superior derecho: Reinicio -->
+                <div class="card card-config-reset">
+                    <h3>Reiniciar ejercicio</h3>
+                    <p class="config-description">Reinicia el tablero y todos los puntajes. Esta acción no se puede deshacer.</p>
+                    <div class="control wrap mb-8">
+                        <button id="btn-reset-exercise" class="btn-danger">⟳ Reiniciar ejercicio</button>
+                    </div>
+                    <div class="status" id="reset-status">Listo para reiniciar</div>
                 </div>
-            </div>
 
-            <div class="card grid-span-full">
-                <h3>Control de pregunta</h3>
-                <div class="control wrap mb-8">
-                    <button id="btn-correct" class="btn-success">✔ Correcto</button>
-                    <button id="btn-incorrect" class="btn-danger">✖ Incorrecto</button>
-                    <button id="btn-cancel" class="btn-secondary">⎋ Cancelar</button>
-                </div>
-                <div class="control admin-answers">
-                    <div class="answer-label">Respuestas:</div>
-                    <button class="btn-primary admin-answer-btn" data-answer="0">a</button>
-                    <button class="btn-primary admin-answer-btn" data-answer="1">b</button>
-                    <button class="btn-primary admin-answer-btn" data-answer="2">c</button>
-                    <button class="btn-primary admin-answer-btn" data-answer="3">d</button>
-                </div>
-                <div class="status mt-10" id="admin-action-status">Usa a/b/c/d o los botones para responder, Escape para cancelar.</div>
-                <div class="admin-info hidden" id="admin-correct-box">
-                    <div class="info-title">Respuesta correcta (solo moderador)</div>
-                    <div class="kv">Letra: <span id="admin-correct-letter">-</span></div>
-                    <div class="kv">Contenido: <span id="admin-correct-text">-</span></div>
+                <!-- Panel inferior: Listado de bancos (full width) -->
+                <div class="card card-config-banks">
+                    <h3>Bancos de preguntas disponibles</h3>
+                    <div id="question-banks-list" class="question-banks-list">
+                        <!-- Lista de bancos se generará dinámicamente -->
+                        <div class="banks-placeholder">No hay bancos de preguntas guardados</div>
+                    </div>
                 </div>
             </div>
         </div>

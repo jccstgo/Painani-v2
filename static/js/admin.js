@@ -51,6 +51,31 @@
   }
 
   // -----------------------------
+  // Sistema de Pestañas
+  // -----------------------------
+  function initTabs() {
+    const tabButtons = document.querySelectorAll('.tab-button');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    tabButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const targetTab = button.getAttribute('data-tab');
+
+        // Remover clase active de todos los botones y contenidos
+        tabButtons.forEach(btn => btn.classList.remove('active'));
+        tabContents.forEach(content => content.classList.remove('active'));
+
+        // Añadir clase active al botón y contenido seleccionados
+        button.classList.add('active');
+        const targetContent = document.getElementById(targetTab);
+        if (targetContent) {
+          targetContent.classList.add('active');
+        }
+      });
+    });
+  }
+
+  // -----------------------------
   // Socket.IO (única instancia)
   // -----------------------------
   function getSocket() {
@@ -164,6 +189,8 @@
   // -----------------------------
   function init() {
     cacheElements();
+    initTabs(); // Inicializar sistema de pestañas
+    renderQuestionBanks(); // Cargar bancos de preguntas guardados
     setConn('Conectando…');
 
     // Inicializar socket y eventos
@@ -426,25 +453,52 @@
     if (!file) return;
 
     if (els.selectedFile) els.selectedFile.textContent = file.name;
-    setLoadStatus(`Cargando ${file.name}…`, 'info');
+    setLoadStatus(`Guardando ${file.name} en la lista...`, 'info');
 
-    const formData = new FormData();
-    formData.append('file', file);
+    // Validar la extensión del archivo
+    const fileName = file.name.toLowerCase();
+    if (!fileName.endsWith('.json') && !fileName.endsWith('.csv')) {
+      setLoadStatus('Error: Solo se permiten archivos .json o .csv', 'error');
+      input.value = '';
+      return;
+    }
 
-    fetch('/api/load-data', { method: 'POST', body: formData })
-      .then(async (response) => {
-        const data = await response.json().catch(() => ({}));
-        if (response.ok && data.success) {
-          setLoadStatus(data.message || 'Datos cargados correctamente', 'ok');
-        } else {
-          const msg = data.error || 'Error al cargar archivo';
-          throw new Error(msg);
-        }
-      })
-      .catch((err) => {
-        setLoadStatus(err.message || 'Error al cargar archivo', 'error');
-      })
-      .finally(() => { input.value = ''; });
+    // Leer el archivo para guardarlo en localStorage (sin cargarlo al servidor aún)
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const fileContent = e.target.result;
+
+      // Validar que el contenido no esté vacío
+      if (!fileContent || fileContent.trim().length === 0) {
+        setLoadStatus('Error: El archivo está vacío', 'error');
+        input.value = '';
+        return;
+      }
+
+      console.log('Archivo leído correctamente:', file.name, 'Tamaño:', fileContent.length);
+
+      // Solo guardar en localStorage, y autocargar (comportamiento anterior)
+      saveBankFromFile(file.name, fileContent);
+      try {
+        const banks = loadQuestionBanks();
+        const idx = Math.max(0, banks.length - 1);
+        setLoadStatus(`"${file.name}" agregado. Cargando banco...`, 'info');
+        loadBankData(idx);
+      } catch (err) {
+        console.error('Autocarga falló:', err);
+        setLoadStatus(`"${file.name}" agregado a la lista. Usa el botón "Cargar" para aplicarlo.`, 'ok');
+      }
+      input.value = '';
+    };
+
+    reader.onerror = (e) => {
+      console.error('Error al leer archivo:', e);
+      setLoadStatus('Error al leer el archivo', 'error');
+      input.value = '';
+    };
+
+    // Usar readAsText con codificación UTF-8
+    reader.readAsText(file, 'UTF-8');
   }
 
   // -----------------------------
@@ -549,6 +603,7 @@
 
   function renderCorrectInfo(q) {
     if (!els.correctBox) return;
+    const placeholder = document.getElementById('admin-correct-placeholder');
     let letter = '-';
     let text = '-';
     if (q) {
@@ -570,8 +625,10 @@
     els.correctText.textContent = text || '-';
     if (text && text !== '-') {
       els.correctBox.classList.remove('hidden');
+      if (placeholder) placeholder.classList.add('hidden');
     } else {
       els.correctBox.classList.add('hidden');
+      if (placeholder) placeholder.classList.remove('hidden');
     }
   }
 
@@ -617,6 +674,205 @@
     } else {
       els.resetStatus.style.color = '#fff';
     }
+  }
+
+  // -----------------------------
+  // Gestión de bancos de preguntas
+  // -----------------------------
+  function loadQuestionBanks() {
+    const banksJson = localStorage.getItem('question_banks');
+    return banksJson ? JSON.parse(banksJson) : [];
+  }
+
+  function saveQuestionBanks(banks) {
+    localStorage.setItem('question_banks', JSON.stringify(banks));
+  }
+
+  function renderQuestionBanks() {
+    const listEl = document.getElementById('question-banks-list');
+    if (!listEl) return;
+
+    const banks = loadQuestionBanks();
+
+    if (banks.length === 0) {
+      listEl.innerHTML = '<div class="banks-placeholder">No hay bancos de preguntas guardados</div>';
+      return;
+    }
+
+    listEl.innerHTML = '';
+    banks.forEach((bank, index) => {
+      const item = document.createElement('div');
+      item.className = 'bank-item';
+
+      const info = document.createElement('div');
+      info.className = 'bank-item-info';
+
+      const name = document.createElement('div');
+      name.className = 'bank-item-name';
+      name.textContent = bank.name;
+
+      const meta = document.createElement('div');
+      meta.className = 'bank-item-meta';
+      meta.textContent = `Guardado: ${new Date(bank.timestamp).toLocaleString('es-ES')}`;
+
+      info.appendChild(name);
+      info.appendChild(meta);
+
+      const actions = document.createElement('div');
+      actions.className = 'bank-item-actions';
+
+      const loadBtn = document.createElement('button');
+      loadBtn.className = 'btn-bank btn-bank-load';
+      loadBtn.textContent = 'Cargar';
+      loadBtn.addEventListener('click', () => loadBankData(index));
+
+      const deleteBtn = document.createElement('button');
+      deleteBtn.className = 'btn-bank btn-bank-delete';
+      deleteBtn.textContent = 'Eliminar';
+      deleteBtn.addEventListener('click', () => deleteBank(index));
+
+      actions.appendChild(loadBtn);
+      actions.appendChild(deleteBtn);
+
+      item.appendChild(info);
+      item.appendChild(actions);
+      listEl.appendChild(item);
+    });
+  }
+
+  function saveBankFromFile(fileName, fileData) {
+    const banks = loadQuestionBanks();
+    console.log('Guardando banco:', fileName, 'Tamaño:', fileData.length, 'caracteres');
+    banks.push({
+      name: fileName,
+      data: fileData,
+      timestamp: Date.now()
+    });
+    saveQuestionBanks(banks);
+    console.log('Total de bancos guardados:', banks.length);
+    renderQuestionBanks();
+  }
+
+  function loadBankData(index) {
+    const banks = loadQuestionBanks();
+    if (index < 0 || index >= banks.length) {
+      console.error('Índice de banco inválido:', index);
+      setLoadStatus('Error: Índice de banco inválido', 'error');
+      return;
+    }
+
+    const bank = banks[index];
+    console.log('Cargando banco:', bank.name);
+    console.log('Datos del banco:', {
+      name: bank.name,
+      dataLength: bank.data ? bank.data.length : 0,
+      timestamp: bank.timestamp,
+      dataPreview: bank.data ? bank.data.substring(0, 100) + '...' : 'sin datos'
+    });
+
+    setLoadStatus(`Cargando banco "${bank.name}"...`, 'info');
+
+    // Validar que existan los datos
+    if (!bank.data || bank.data.trim().length === 0) {
+      console.error('El banco no tiene datos');
+      setLoadStatus('Error: El banco no tiene datos', 'error');
+      return;
+    }
+
+    // Determinar el tipo MIME basado en la extensión del archivo
+    let mimeType = 'text/plain';
+    const fileName = bank.name.toLowerCase();
+    if (fileName.endsWith('.json')) {
+      mimeType = 'application/json';
+    } else if (fileName.endsWith('.csv')) {
+      mimeType = 'text/csv';
+    }
+
+    console.log('Tipo MIME detectado:', mimeType);
+    console.log('Tamaño de datos:', bank.data.length, 'caracteres');
+
+    // Enviar como Blob con nombre de archivo explícito (mejor compatibilidad)
+    try {
+      const blob = new Blob([bank.data], { type: mimeType });
+      const formData = new FormData();
+      formData.append('file', blob, bank.name);
+
+      console.log('Enviando petición a /api/load-data...');
+      console.log('FormData creado con archivo:', bank.name, 'tipo:', mimeType, 'tamaño(chars):', bank.data.length);
+
+      fetch('/api/load-data', { method: 'POST', body: formData })
+        .then(async (response) => {
+          console.log('Respuesta recibida:', response.status, response.statusText);
+
+          // Intentar parsear directamente como JSON; si falla, degradar a texto
+          let data;
+          try {
+            data = await response.json();
+          } catch (_) {
+            const responseText = await response.text();
+            console.log('Respuesta (texto):', responseText);
+            try {
+              data = JSON.parse(responseText);
+            } catch (e) {
+              console.error('Error parseando JSON de respuesta:', e);
+              data = { success: false, error: 'Respuesta del servidor no es JSON válido' };
+            }
+          }
+
+          console.log('Datos de respuesta parseados:', data);
+
+          if (response.ok && data.success) {
+            setLoadStatus(data.message || 'Banco cargado correctamente', 'ok');
+            console.log('Banco cargado exitosamente, refrescando tablero...');
+            // Refrescar el tablero después de cargar
+            fetchBoard();
+          } else {
+            const msg = data.error || `Error al cargar banco (${response.status}: ${response.statusText})`;
+            console.error('Error en la carga:', msg);
+            throw new Error(msg);
+          }
+        })
+        .catch((err) => {
+          console.error('Error en fetch (FormData):', err);
+          setLoadStatus('Reintentando con método alternativo...', 'info');
+          // Fallback: enviar nombre + contenido en JSON a un endpoint alterno
+          fetch('/api/load-data-inline', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name: bank.name, content: bank.data })
+          })
+            .then(async (response) => {
+              let data; try { data = await response.json(); } catch (_) { data = null; }
+              if (response.ok && data && data.success) {
+                setLoadStatus(data.message || 'Banco cargado correctamente', 'ok');
+                fetchBoard();
+              } else {
+                const msg = (data && data.error) || `Error en fallback inline (${response.status}: ${response.statusText})`;
+                throw new Error(msg);
+              }
+            })
+            .catch((e2) => {
+              console.error('Ambos métodos de carga fallaron:', e2);
+              setLoadStatus(e2?.message || 'Error al cargar banco', 'error');
+            });
+        });
+    } catch (e) {
+      console.error('Error creando archivo:', e);
+      setLoadStatus('Error al preparar el archivo para carga', 'error');
+    }
+  }
+
+  function deleteBank(index) {
+    const banks = loadQuestionBanks();
+    if (index < 0 || index >= banks.length) return;
+
+    const bank = banks[index];
+    if (!confirm(`¿Eliminar el banco "${bank.name}"?`)) return;
+
+    banks.splice(index, 1);
+    saveQuestionBanks(banks);
+    renderQuestionBanks();
+    setLoadStatus(`Banco "${bank.name}" eliminado.`, 'ok');
   }
 
   // -----------------------------

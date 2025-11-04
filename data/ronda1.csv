@@ -1,0 +1,37 @@
+﻿idpregunta,categoria,valor,Pregunta,opcion_a,opcion_b,opcion_c,opcion_d,respuesta,imagen,nombre_imagen
+1,Historia,100,¿En qué año comenzó la Primera Guerra Mundial?,1912,1914,1916,1918,B,si,1.jpg
+2,Historia,200,¿Quién fue el primer emperador del Imperio Romano?,Julio César,Nerón,Augusto,Trajano,C,si,2.jpg
+3,Historia,300,¿Qué civilización construyó Machu Picchu?,Aztecas,Mayas,Incas,Olmecas,C,si,3.jpg
+4,Historia,400,¿En qué año cayó el Muro de Berlín?,1985,1987,1989,1991,C,si,4.jpg
+5,Historia,500,"Durante la Segunda Guerra Mundial, ¿qué operación militar llevada a cabo el 6 de junio de 1944 involucró el desembarco masivo de tropas aliadas en las playas de Normandía, Francia, marcando el inicio de la liberación de Europa Occidental del dominio nazi y siendo considerada una de las operaciones anfibias más grandes y complejas de la historia militar moderna?",Operación Overlord,Operación Barbarroja,Operación Market Garden,Operación Torch,A,si,5.jpg
+6,Historia,600,¿Qué dinastía gobernó China durante la construcción de la Gran Muralla?,Ming,Han,Qin,Tang,C,no,6.jpg
+7,Ciencia,100,¿Cuál es el planeta más cercano al Sol?,Venus,Mercurio,Marte,Júpiter,B,no,7.jpg
+8,Ciencia,200,¿Qué gas es esencial para la respiración humana?,Nitrógeno,Oxígeno,Dióxido de carbono,Helio,B,no,8.jpg
+9,Ciencia,300,¿Cuál es la fórmula química del agua?,H₂O,CO₂,O₂,CH₄,A,no,9.jpg
+10,Ciencia,400,¿Qué científico propuso la teoría de la relatividad?,Isaac Newton,Albert Einstein,Galileo Galilei,Nikola Tesla,B,no,10.jpg
+11,Ciencia,500,"¿Qué teoría científica propuesta por Charles Darwin en su libro ""El Origen de las Especies"" publicado en 1859, explica cómo las especies evolucionan a lo largo del tiempo mediante un proceso de selección natural en el que los individuos mejor adaptados a su ambiente tienen mayor probabilidad de sobrevivir y reproducirse, transmitiendo sus características ventajosas a las siguientes generaciones?",Teoría de la Generación Espontánea,Teoría de la Evolución,Teoría del Diseño Inteligente,Teoría Lamarckiana,B,no,11.jpg
+12,Ciencia,600,¿Qué es el bosón de Higgs?,Un tipo de átomo,Una partícula que da masa a otras partículas,Un gas inerte,Una fuerza gravitacional,B,no,12.jpg
+13,Geografía,100,¿Cuál es el río más largo del mundo?,Amazonas,Nilo,Yangtsé,Misisipi,A,no,13.jpg
+14,Geografía,200,¿Qué país tiene la mayor población del mundo?,India,China,Estados Unidos,Indonesia,B,no,14.jpg
+15,Geografía,300,¿Cuál es la capital de Australia?,Sídney,Melbourne,Canberra,Perth,C,no,15.jpg
+16,Geografía,400,¿En qué continente se encuentra el desierto del Sahara?,Asia,África,América,Oceanía,B,no,16.jpg
+17,Geografía,500,"¿Qué río, considerado el más largo del mundo con aproximadamente 6,650 kilómetros, atraviesa once países del continente africano incluyendo Uganda, Sudán y Egipto, desemboca en el Mar Mediterráneo formando un extenso delta, y ha sido fundamental para el desarrollo de antiguas civilizaciones como la egipcia, que dependía de sus inundaciones anuales para la agricultura?",Río Congo,Río Nilo,Río Amazonas,Río Níger,B,no,17.jpg
+18,Geografía,600,¿Qué país tiene más islas en el mundo?,Japón,Canadá,Suecia,Indonesia,C,no,18.jpg
+19,Arte,100,¿Quién pintó la Mona Lisa?,Miguel Ángel,Leonardo da Vinci,Rafael,Botticelli,B,no,19.jpg
+20,Arte,200,¿A qué corriente pertenece Pablo Picasso?,Surrealismo,Impresionismo,Cubismo,Realismo,C,no,20.jpg
+21,Arte,300,¿En qué museo se encuentra “La noche estrellada” de Van Gogh?,Louvre,Museo del Prado,Museo de Arte Moderno de Nueva York,National Gallery,C,no,21.jpg
+22,Arte,400,¿Qué escultor creó “El David”?,Donatello,Bernini,Miguel Ángel,Cellini,C,no,22.jpg
+23,Arte,500,"¿Qué técnica pictórica desarrollada durante el Renacimiento italiano consiste en aplicar pigmentos mezclados con agua sobre una superficie de yeso húmedo o ""fresco"", permitiendo que los colores se integren químicamente con la pared mientras se seca, y fue utilizada magistralmente por artistas como Miguel Ángel en la Capilla Sixtina y por Giotto en la Basílica de San Francisco de Asís?",Óleo sobre lienzo,Acuarela,Fresco o pintura al fresco,Temple,C,no,23.jpg
+24,Arte,600,¿Qué pintura representa el bombardeo de Guernica?,Las Meninas,El jardín de las delicias,Guernica,La persistencia de la memoria,C,no,24.jpg
+25,Deportes,100,¿Cuántos jugadores tiene un equipo de fútbol en el campo?,9,10,11,12,C,no,25.jpg
+26,Deportes,200,¿En qué deporte se usa una raqueta y una pelota amarilla?,Pádel,Tenis,Bádminton,Squash,B,no,26.jpg
+27,Deportes,300,¿En qué año se celebraron los primeros Juegos Olímpicos modernos?,1896,1900,1912,1920,A,no,27.jpg
+28,Deportes,400,¿Qué país ha ganado más Copas del Mundo de fútbol?,Alemania,Italia,Brasil,Argentina,C,no,28.jpg
+29,Deportes,500,"¿Qué torneo de fútbol internacional organizado por la FIFA cada cuatro años desde 1930, con excepción de 1942 y 1946 debido a la Segunda Guerra Mundial, reúne a las mejores selecciones nacionales del mundo en una competencia que se ha convertido en el evento deportivo más visto globalmente, superando incluso a los Juegos Olímpicos en términos de audiencia televisiva?",Copa América,Eurocopa,Copa Mundial de la FIFA,Copa Confederaciones,C,no,29.jpg
+30,Deportes,600,¿En qué deporte destacó Michael Phelps?,Atletismo,Gimnasia,Natación,Remo,C,no,30.jpg
+31,Literatura,100,¿Quién escribió “Don Quijote de la Mancha”?,Lope de Vega,Miguel de Cervantes,Calderón de la Barca,Garcilaso de la Vega,B,no,31.jpg
+32,Literatura,200,¿Qué autor escribió “Cien años de soledad”?,Mario Vargas Llosa,Gabriel García Márquez,Julio Cortázar,Pablo Neruda,B,no,32.jpg
+33,Literatura,300,¿En qué país nació William Shakespeare?,Francia,Escocia,Inglaterra,Irlanda,C,no,33.jpg
+34,Literatura,400,¿Qué libro comienza con la frase “En un lugar de la Mancha…”?,El Lazarillo de Tormes,La Celestina,Don Quijote de la Mancha,Crónica de una muerte anunciada,C,no,34.jpg
+35,Literatura,500,"¿Qué novela épica escrita por Miguel de Cervantes Saavedra y publicada en dos partes en 1605 y 1615, narra las aventuras y desventuras de un hidalgo manchego que pierde la razón por leer demasiados libros de caballerías, se autodenomina caballero andante, sale a buscar aventuras acompañado de su fiel escudero Sancho Panza y es considerada una de las obras más importantes de la literatura universal?",El Quijote de la Mancha,Amadís de Gaula,Tirant lo Blanch,El Lazarillo de Tormes,A,no,35.jpg
+36,Literatura,600,¿Qué escritor francés es autor de “Los miserables”?,Molière,Victor Hugo,Balzac,Dumas,B,no,36.jpg

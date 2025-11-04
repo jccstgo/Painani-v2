@@ -1,0 +1,25 @@
+﻿idpregunta,categoria,valor,Pregunta,opcion_a,opcion_b,opcion_c,opcion_d,respuesta,imagen,nombre_imagen
+1,Historia,100,¿En qué año comenzó la Primera Guerra Mundial?,1912,1914,1916,1918,B,si,1.jpg
+2,Historia,200,¿Quién fue el primer emperador del Imperio Romano?,Julio César,Nerón,Augusto,Trajano,C,si,2.jpg
+3,Historia,300,¿Qué civilización construyó Machu Picchu?,Aztecas,Mayas,Incas,Olmecas,C,si,3.jpg
+4,Historia,400,¿En qué año cayó el Muro de Berlín?,1985,1987,1989,1991,C,si,4.jpg
+7,Ciencia,100,¿Cuál es el planeta más cercano al Sol?,Venus,Mercurio,Marte,Júpiter,B,no,7.jpg
+8,Ciencia,200,¿Qué gas es esencial para la respiración humana?,Nitrógeno,Oxígeno,Dióxido de carbono,Helio,B,no,8.jpg
+9,Ciencia,300,¿Cuál es la fórmula química del agua?,H₂O,CO₂,O₂,CH₄,A,no,9.jpg
+10,Ciencia,400,¿Qué científico propuso la teoría de la relatividad?,Isaac Newton,Albert Einstein,Galileo Galilei,Nikola Tesla,B,no,10.jpg
+13,Geografía,100,¿Cuál es el río más largo del mundo?,Amazonas,Nilo,Yangtsé,Misisipi,A,no,13.jpg
+14,Geografía,200,¿Qué país tiene la mayor población del mundo?,India,China,Estados Unidos,Indonesia,B,no,14.jpg
+15,Geografía,300,¿Cuál es la capital de Australia?,Sídney,Melbourne,Canberra,Perth,C,no,15.jpg
+16,Geografía,400,¿En qué continente se encuentra el desierto del Sahara?,Asia,África,América,Oceanía,B,no,16.jpg
+19,Arte,100,¿Quién pintó la Mona Lisa?,Miguel Ángel,Leonardo da Vinci,Rafael,Botticelli,B,no,19.jpg
+20,Arte,200,¿A qué corriente pertenece Pablo Picasso?,Surrealismo,Impresionismo,Cubismo,Realismo,C,no,20.jpg
+21,Arte,300,¿En qué museo se encuentra “La noche estrellada” de Van Gogh?,Louvre,Museo del Prado,Museo de Arte Moderno de Nueva York,National Gallery,C,no,21.jpg
+22,Arte,400,¿Qué escultor creó “El David”?,Donatello,Bernini,Miguel Ángel,Cellini,C,no,22.jpg
+25,Deportes,100,¿Cuántos jugadores tiene un equipo de fútbol en el campo?,9,10,11,12,C,no,25.jpg
+26,Deportes,200,¿En qué deporte se usa una raqueta y una pelota amarilla?,Pádel,Tenis,Bádminton,Squash,B,no,26.jpg
+27,Deportes,300,¿En qué año se celebraron los primeros Juegos Olímpicos modernos?,1896,1900,1912,1920,A,no,27.jpg
+28,Deportes,400,¿Qué país ha ganado más Copas del Mundo de fútbol?,Alemania,Italia,Brasil,Argentina,C,no,28.jpg
+31,Literatura,100,¿Quién escribió “Don Quijote de la Mancha”?,Lope de Vega,Miguel de Cervantes,Calderón de la Barca,Garcilaso de la Vega,B,no,31.jpg
+32,Literatura,200,¿Qué autor escribió “Cien años de soledad”?,Mario Vargas Llosa,Gabriel García Márquez,Julio Cortázar,Pablo Neruda,B,no,32.jpg
+33,Literatura,300,¿En qué país nació William Shakespeare?,Francia,Escocia,Inglaterra,Irlanda,C,no,33.jpg
+34,Literatura,400,¿Qué libro comienza con la frase “En un lugar de la Mancha…”?,El Lazarillo de Tormes,La Celestina,Don Quijote de la Mancha,Crónica de una muerte anunciada,C,no,34.jpg

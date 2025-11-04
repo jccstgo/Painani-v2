@@ -102,11 +102,11 @@ def load_data():
             # Verificar si la carpeta existe
             if os.path.exists(images_folder) and os.path.isdir(images_folder):
                 game.images_folder = csv_basename
-                print(f"📁 Carpeta de imágenes configurada: {images_folder}")
+                print(f"[INFO] Carpeta de imagenes configurada: {images_folder}")
             else:
                 game.images_folder = None
-                print(f"⚠️ No se encontró carpeta de imágenes: {images_folder}")
-                print(f"   Asegúrate de crear la carpeta: {images_folder}")
+                print(f"[WARN] No se encontro carpeta de imagenes: {images_folder}")
+                print(f"       Asegurate de crear la carpeta: {images_folder}")
         else:
             game.data = game_logic.load_data(file_path)
             game.images_folder = None
@@ -124,6 +124,82 @@ def load_data():
         socketio.emit('game_reset', board_payload)
 
         display_name = original_name or os.path.basename(file_path)
+        message = f"Datos cargados correctamente desde {display_name}"
+        if game.images_folder:
+            message += f" (con imágenes de data/{game.images_folder}/)"
+        return jsonify({"success": True, "message": message})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
+    finally:
+        if uploaded_path and os.path.exists(uploaded_path):
+            try:
+                os.remove(uploaded_path)
+            except OSError:
+                pass
+
+
+@app.route('/api/load-data-inline', methods=['POST'])
+def load_data_inline():
+    """Carga datos recibiendo nombre y contenido en el cuerpo JSON.
+    Útil como fallback cuando FormData no funciona en algunos navegadores.
+    """
+    uploaded_path = None
+    original_name = None
+    try:
+        payload = request.get_json(silent=True) or {}
+        original_name = payload.get('name') or ''
+        content = payload.get('content') or ''
+
+        if not original_name:
+            return jsonify({"error": "No se especificó nombre de archivo"}), 400
+        if not isinstance(content, str) or not content.strip():
+            return jsonify({"error": "Contenido vacío o inválido"}), 400
+
+        _, ext = os.path.splitext(original_name)
+        ext = (ext or '').lower()
+        if ext not in ('.json', '.csv'):
+            return jsonify({"error": "Formato no soportado"}), 400
+
+        # Escribir contenido a un archivo temporal para reutilizar la lógica existente
+        temp_file = tempfile.NamedTemporaryFile(delete=False, suffix=ext, mode='w', encoding='utf-8', newline='')
+        temp_file.write(content)
+        temp_file.close()
+        uploaded_path = temp_file.name
+
+        file_type = 'csv' if ext == '.csv' else 'json'
+        file_path = uploaded_path
+
+        if file_type == 'csv':
+            game.data = game_logic.load_from_csv_sampled(
+                file_path,
+                used_csv_path="data/usadas.csv"
+            )
+
+            # Establecer carpeta de imágenes basada en el NOMBRE ORIGINAL del archivo
+            csv_basename = Path(original_name).stem
+            images_folder = f"data/{csv_basename}"
+            if os.path.exists(images_folder) and os.path.isdir(images_folder):
+                game.images_folder = csv_basename
+                print(f"[INFO] Carpeta de imagenes configurada: {images_folder}")
+            else:
+                game.images_folder = None
+                print(f"[WARN] No se encontro carpeta de imagenes: {images_folder}")
+                print(f"       Asegurate de crear la carpeta: {images_folder}")
+        else:
+            game.data = game_logic.load_data(file_path)
+            game.images_folder = None
+
+        # Reiniciar solo el tablero (preservar puntajes)
+        game.reset_round()
+
+        board_payload = game.get_board_state()
+        try:
+            board_payload = {**board_payload, 'scores_preserved': True}
+        except Exception:
+            board_payload['scores_preserved'] = True
+        socketio.emit('game_reset', board_payload)
+
+        display_name = original_name
         message = f"Datos cargados correctamente desde {display_name}"
         if game.images_folder:
             message += f" (con imágenes de data/{game.images_folder}/)"
