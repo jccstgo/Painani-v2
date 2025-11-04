@@ -985,3 +985,228 @@ button:disabled {
         font-size: 12px;
     }
 }
+
+/* ===========================
+   RESPONSIVE PARA ORIENTACIÓN DE TABLETAS
+   =========================== */
+
+/* Tabletas en orientación portrait (vertical) - 768px - 1024px */
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+    /* Layout de la pestaña juego en una sola columna */
+    .admin-grid-game {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+        gap: 10px;
+    }
+
+    .card-board {
+        grid-column: 1;
+        grid-row: 1;
+    }
+
+    .card-question-control {
+        grid-column: 1;
+        grid-row: 2;
+    }
+
+    .card-correct-answer {
+        grid-column: 1;
+        grid-row: 3;
+    }
+
+    /* Aumentar tamaños para mejor visualización en vertical */
+    .admin-answer-btn {
+        font-size: 32px !important;
+        padding: 22px 30px !important;
+        min-width: 90px;
+    }
+}
+
+/* Tabletas en orientación landscape (horizontal) - mantener dos columnas */
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    /* Mantener el layout de dos columnas en horizontal */
+    .admin-grid-game {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto;
+    }
+
+    .card-board {
+        grid-column: 1 / -1;
+        grid-row: 1;
+    }
+
+    .card-question-control {
+        grid-column: 1;
+        grid-row: 2;
+    }
+
+    .card-correct-answer {
+        grid-column: 2;
+        grid-row: 2;
+    }
+
+    /* Reducir altura del tablero para que quepa todo en pantalla */
+    .card-board {
+        max-height: 40vh;
+    }
+
+    .admin-board-grid {
+        max-height: 30vh;
+    }
+}
+
+/* iPad específico (1024x768) - orientación portrait */
+@media (width: 768px) and (height: 1024px) {
+    .admin-grid-game {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+    }
+
+    .card-board {
+        grid-column: 1;
+    }
+
+    .card-question-control {
+        grid-column: 1;
+    }
+
+    .card-correct-answer {
+        grid-column: 1;
+    }
+}
+
+/* iPad específico (1024x768) - orientación landscape */
+@media (width: 1024px) and (height: 768px) {
+    .admin-grid-game {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto;
+    }
+
+    .card-board {
+        grid-column: 1 / -1;
+        max-height: 35vh;
+    }
+}
+
+/* ===========================
+   RESPONSIVE PESTAÑA EQUIPOS - ORIENTACIÓN
+   =========================== */
+
+/* Tabletas en orientación portrait (vertical) - Pestaña Equipos */
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+    /* Ya está optimizado con grid-template-columns: 1fr */
+    .admin-grid-teams {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr;
+        gap: 12px;
+    }
+
+    /* Asegurar que los puntajes ocupen el espacio disponible */
+    .card-scores {
+        min-height: 50vh;
+    }
+
+    /* Aumentar tamaño de fuentes en portrait */
+    .score-name {
+        font-size: 20px;
+    }
+
+    .score-value {
+        font-size: 26px;
+    }
+}
+
+/* Tabletas en orientación landscape (horizontal) - Pestaña Equipos */
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    /* En landscape, mantener layout vertical pero más compacto */
+    .admin-grid-teams {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr;
+        gap: 10px;
+    }
+
+    .card-teams-selector {
+        padding: 12px;
+    }
+
+    .card-scores {
+        min-height: 0;
+    }
+
+    /* Reducir padding en landscape para aprovechar espacio */
+    .score-row {
+        padding: 10px 14px;
+    }
+}
+
+/* ===========================
+   RESPONSIVE PESTAÑA CONFIGURACIÓN - ORIENTACIÓN
+   =========================== */
+
+/* Tabletas en orientación portrait (vertical) - Pestaña Configuración */
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+    /* En portrait, apilar todo en una columna */
+    .admin-grid-config {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto 1fr;
+        gap: 12px;
+    }
+
+    .card-config-load {
+        grid-column: 1;
+        grid-row: 1;
+    }
+
+    .card-config-reset {
+        grid-column: 1;
+        grid-row: 2;
+    }
+
+    .card-config-banks {
+        grid-column: 1;
+        grid-row: 3;
+        min-height: 45vh;
+    }
+
+    /* Botones más grandes en portrait */
+    #btn-pick-file,
+    #btn-reset-exercise {
+        font-size: 16px;
+        padding: 14px 20px;
+    }
+}
+
+/* Tabletas en orientación landscape (horizontal) - Pestaña Configuración */
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    /* En landscape, mantener dos columnas arriba */
+    .admin-grid-config {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto 1fr;
+        gap: 12px;
+    }
+
+    .card-config-load {
+        grid-column: 1;
+        grid-row: 1;
+    }
+
+    .card-config-reset {
+        grid-column: 2;
+        grid-row: 1;
+    }
+
+    .card-config-banks {
+        grid-column: 1 / -1;
+        grid-row: 2;
+        min-height: 0;
+    }
+
+    /* Reducir padding en landscape */
+    .card {
+        padding: 14px;
+    }
+
+    .bank-item {
+        padding: 12px 14px;
+    }
+}
