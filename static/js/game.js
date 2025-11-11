@@ -1128,6 +1128,11 @@ function renderPlayers(scores = []) {
         scoreEl.className = 'score';
         scoreEl.textContent = scoreValue;
 
+        // Pintar en rojo si el puntaje es negativo
+        if (scoreValue < 0) {
+            scoreEl.style.color = '#FF3333';
+        }
+
         playerDiv.appendChild(button);
         playerDiv.appendChild(scoreEl);
 
@@ -1159,6 +1164,11 @@ function renderPlayers(scores = []) {
         const quickScore = document.createElement('span');
         quickScore.className = 'player-quick-score';
         quickScore.textContent = scoreValue;
+
+        // Pintar en rojo si el puntaje es negativo
+        if (scoreValue < 0) {
+            quickScore.style.color = '#FF3333';
+        }
 
         const plusBtn = document.createElement('button');
         plusBtn.className = 'btn-adjust plus';
@@ -1253,6 +1263,13 @@ function updateScores(scores) {
         if (scoreEl) {
             const scoreValue = typeof scores[idx] !== 'undefined' ? scores[idx] : 0;
             scoreEl.textContent = scoreValue;
+
+            // Pintar en rojo si el puntaje es negativo
+            if (scoreValue < 0) {
+                scoreEl.style.color = '#FF3333';
+            } else {
+                scoreEl.style.color = ''; // Resetear al color por defecto
+            }
         }
     });
 
@@ -1531,7 +1548,15 @@ function updateQuickAdjustScores() {
 
     scores.forEach((scoreEl, idx) => {
         if (quickScores[idx]) {
+            const scoreValue = parseInt(scoreEl.textContent, 10) || 0;
             quickScores[idx].textContent = scoreEl.textContent;
+
+            // Pintar en rojo si el puntaje es negativo
+            if (scoreValue < 0) {
+                quickScores[idx].style.color = '#FF3333';
+            } else {
+                quickScores[idx].style.color = ''; // Resetear al color por defecto
+            }
         }
     });
 }

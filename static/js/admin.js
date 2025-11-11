@@ -519,8 +519,14 @@
 
       const value = document.createElement('div');
       value.className = 'score-value';
-      value.textContent = String(typeof list[i] !== 'undefined' ? list[i] : 0);
+      const scoreValue = typeof list[i] !== 'undefined' ? list[i] : 0;
+      value.textContent = String(scoreValue);
       value.id = `admin-score-${i}`;
+
+      // Pintar en rojo si el puntaje es negativo
+      if (scoreValue < 0) {
+        value.style.color = '#FF3333';
+      }
 
       const controls = document.createElement('div');
       controls.className = 'score-controls';
